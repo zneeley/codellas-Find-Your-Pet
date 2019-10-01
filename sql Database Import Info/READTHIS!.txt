@@ -1,0 +1,10 @@
+1) Create a user with phpmyadmin with the following information 
+	- Username: website
+	- Password: MRhZNdkXBfmnXHEr
+	- Hostname: localhost
+	- Rights: All of them (can be changed later but idk what perms it needs)
+	
+2) Follow this link on how to import the users.sql database file
+https://help.dreamhost.com/hc/en-us/articles/214395768-phpMyAdmin-How-to-import-restore-a-database-or-table 
+
+3) If you want to change any of the information coded into the login system just edit the config.php file to what you want.
