@@ -9,30 +9,6 @@ body, html {
   font-family: arial, Helvetica, sans-serif;
 }
 
-.hero-image {  
-
-   /* Sizing */
-    width: 100vw;
-    height: 100vh;
-    
-    /* Flexbox stuff */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    /* Text styles */
-    text-align: center;
-    color: white;
-    
-    /* Background styles */
-    background-image: linear-gradient(rgba(255,255,255, 2), rgba(0,0,0, 0.5)), url("/images/hero.jpg");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-
-}
-
 .logo-image {
     width: 90vw;
     height: auto;

@@ -1,4 +1,41 @@
+<?php
+    // Logic for random background
+    $background = array('hero.jpg','hero2.jpg');
+    
+    // Get a random number and set background
+    $i = rand(0, count($background)-1);
+    $selectedBg = "$background[$i]";
+    
+?>
+
 <!DOCTYPE html>
+<style type="text/css">
+<!--
+.hero-image {  
+
+   /* Sizing */
+    width: 100vw;
+    height: 100vh;
+    
+    /* Flexbox stuff */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Text styles */
+    text-align: center;
+    color: white;
+    
+    /* Background styles */
+    background-image: linear-gradient(rgba(255,255,255, 2), rgba(0,0,0, 0.5)), url(images/<?php echo $selectedBg; ?>);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+}
+-->
+</style>
 <html>
 <head>
 <!-- Required meta tags -->
