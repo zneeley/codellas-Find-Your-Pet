@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2019 at 02:51 AM
+-- Generation Time: Oct 07, 2019 at 06:08 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -30,9 +30,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
+  `userID` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `userID` varchar(255) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -40,8 +40,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `userID`, `created_at`) VALUES
-(2, 'admin', '$2y$10$lG/TILe0pROugrwHcT9QOuhBYe2U0Yfk4pVe0pMdOHAG2FvdbavkO', '', '2019-09-30 18:11:02');
+INSERT INTO `users` (`id`, `userID`, `username`, `password`, `created_at`) VALUES
+(2, '', 'admin', '$2y$10$lG/TILe0pROugrwHcT9QOuhBYe2U0Yfk4pVe0pMdOHAG2FvdbavkO', '2019-09-30 18:11:02'),
+(12, 'UUID-5d9aba146aa44', 'thisaccount', '$2y$10$V4tT/s2N1.IFnzEjNu5kjeFOXOniyzLcvutbhdf/ghCAqGGlolMqW', '2019-10-06 22:07:48');
 
 --
 -- Indexes for dumped tables
@@ -62,7 +63,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
