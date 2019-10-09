@@ -28,61 +28,136 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check if password is empty
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter your password.";
-    } else{
+    } else {
         $password = trim($_POST["password"]);
     }
     
     // Validate credentials
-    if(empty($username_err) && empty($password_err)){
-        // Prepare a select statement
-        $sql = "SELECT id, username, password FROM users WHERE username = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
+    // Check to see if the username is in the user table else see if its in the shelter table
+    // Prepare a select statement
+    $sql = "SELECT id FROM users WHERE username = ?";
+    
+    if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-            
-            // Set parameters
-            $param_username = $username;
+            mysqli_stmt_bind_param($stmt, "s", $username);
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
-                // Store result
+                // Store results
                 mysqli_stmt_store_result($stmt);
                 
-                // Check if username exists, if yes then verify password
-                if(mysqli_stmt_num_rows($stmt) == 1){                    
-                    // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
-                    if(mysqli_stmt_fetch($stmt)){
-                        if(password_verify($password, $hashed_password)){
-                            // Password is correct, so start a new session
-                            session_start();
-                            
-                            // Store data in session variables
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;                            
-                            
-                            // Redirect user to welcome page
-                            header("location: welcome.php");
-                        } else{
-                            // Display an error message if password is not valid
-                            $password_err = "The password you entered was not valid.";
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    // If username is in the user table 
+                    if(empty($username_err) && empty($password_err)){
+                        // Prepare a select statement
+                        $sql = "SELECT id, username, password, userID FROM users WHERE username = ?";
+
+                        if($stmt = mysqli_prepare($link, $sql)){
+                            // Bind variables to the prepared statement as parameters
+                            mysqli_stmt_bind_param($stmt, "s", $param_username);
+
+                            // Set parameters
+                            $param_username = $username;
+
+                            // Attempt to execute the prepared statement
+                            if(mysqli_stmt_execute($stmt)){
+                                // Store result
+                                mysqli_stmt_store_result($stmt);
+
+                                // Check if username exists, if yes then verify password
+                                if(mysqli_stmt_num_rows($stmt) == 1){                    
+                                    // Bind result variables
+                                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $userID);
+                                    if(mysqli_stmt_fetch($stmt)){
+                                        if(password_verify($password, $hashed_password)){
+                                            // Password is correct, so start a new session
+                                            session_start();
+
+                                            // Store data in session variables
+                                            $_SESSION["loggedin"] = true;
+                                            $_SESSION["id"] = $id;
+                                            $_SESSION["username"] = $username;
+                                            $_SESSION["userID"] = $userID;
+                                            $_SESSION["accountType"] = "user";
+
+                                            // Redirect user to welcome page
+                                            header("location: welcome.php");
+                                        } else{
+                                            // Display an error message if password is not valid
+                                            $password_err = "The password you entered was not valid.";
+                                        }
+                                    }
+                                } else{
+                                    // Display an error message if username doesn't exist
+                                    $username_err = "No account found with that username.";
+                                }
+                            } else{
+                                echo "Oops! Something went wrong. Please try again later.";
+                            }
                         }
+
+                        // Close statement
+                        mysqli_stmt_close($stmt);
                     }
-                } else{
-                    // Display an error message if username doesn't exist
-                    $username_err = "No account found with that username.";
+                
+                // Assume the user is in the shelters table
+                } else {
+                    // Assume the user is in the shelters table
+                        if(empty($username_err) && empty($password_err)){
+                        // Prepare a select statement
+                        $sql = "SELECT id, username, password, shelterID FROM shelters WHERE username = ?";
+
+                        if($stmt = mysqli_prepare($link, $sql)){
+                            // Bind variables to the prepared statement as parameters
+                            mysqli_stmt_bind_param($stmt, "s", $param_username);
+
+                            // Set parameters
+                            $param_username = $username;
+
+                            // Attempt to execute the prepared statement
+                            if(mysqli_stmt_execute($stmt)){
+                                // Store result
+                                mysqli_stmt_store_result($stmt);
+
+                                // Check if username exists, if yes then verify password
+                                if(mysqli_stmt_num_rows($stmt) == 1){                    
+                                    // Bind result variables
+                                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $shelterID);
+                                    if(mysqli_stmt_fetch($stmt)){
+                                        if(password_verify($password, $hashed_password)){
+                                            // Password is correct, so start a new session
+                                            session_start();
+
+                                            // Store data in session variables
+                                            $_SESSION["loggedin"] = true;
+                                            $_SESSION["id"] = $id;
+                                            $_SESSION["username"] = $username;
+                                            $_SESSION["shelterID"] = $shelterID;
+                                            $_SESSION["accountType"] = "shelter";
+
+                                            // Redirect user to welcome page
+                                            header("location: welcome.php");
+                                        } else{
+                                            // Display an error message if password is not valid
+                                            $password_err = "The password you entered was not valid.";
+                                        }
+                                    }
+                                } else{
+                                    // Display an error message if username doesn't exist
+                                    $username_err = "No account found with that username.";
+                                }
+                            } else{
+                                echo "Oops! Something went wrong. Please try again later.";
+                            }
+                        }
+
+                        // Close statement
+                        mysqli_stmt_close($stmt);
+                    }
                 }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
             }
         }
-        
-        // Close statement
-        mysqli_stmt_close($stmt);
-    }
-    
+
     // Close connection
     mysqli_close($link);
 }
