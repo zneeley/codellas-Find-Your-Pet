@@ -2,6 +2,6 @@
 *.DS_Store
 Thumbs.db
 
-#Ignore Netbeans folder
+#Ignore unneeded folders
 loginSystem/nbproject/
 loginSystem/xampp/
