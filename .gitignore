@@ -1,2 +1,7 @@
 #OS JUNK Files
 *.DS_Store
+Thumbs.db
+
+#Ignore Netbeans folder
+loginSystem/nbproject/
+loginSystem/xampp/
