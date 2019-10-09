@@ -4,12 +4,14 @@
 	- Hostname: localhost
 	- Rights: All of them (can be changed later but idk what perms it needs)
 	
-3) Create a new database named: users
+2) Create a new database named: findyourpet
 
-2) Follow this link on how to import the users.sql database file
+3) Follow this link on how to import the users.sql database file
 https://help.dreamhost.com/hc/en-us/articles/214395768-phpMyAdmin-How-to-import-restore-a-database-or-table 
 
-3) If you want to change any of the information coded into the login system just edit the config.php file to what you want.
+4) Follow the same instructions above but import the shelters.sql file.
+
+5) If you want to change any of the information coded into the login system just edit the config.php file to what you want.
 
 Note: Right now the one user is admin here is the login info:
 	- Username: admin
