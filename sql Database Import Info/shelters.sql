@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2019 at 08:25 PM
+-- Generation Time: Oct 11, 2019 at 04:44 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -31,6 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `shelters` (
   `id` int(11) NOT NULL,
   `shelterID` varchar(100) NOT NULL,
+  `email` varchar(30) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp()
@@ -40,9 +41,10 @@ CREATE TABLE `shelters` (
 -- Dumping data for table `shelters`
 --
 
-INSERT INTO `shelters` (`id`, `shelterID`, `username`, `password`, `created_at`) VALUES
-(1, 'USID-5d9e170c97b6b', 'defaultShelter', '$2y$10$8UHvF0KR3CXEFFeMGKvxw.HY3Xk2e2NHqH.48BTvkoUFpbtvjrucW', '2019-10-09 11:21:16'),
-(2, 'USID-5d9e17269bb3e', 'adminShelter', '$2y$10$TIoWECE4xAxTLnSCX6vnfOQ1UfWpavTsX3P2w/qQciXIP3n6xL5/i', '2019-10-09 11:21:42');
+INSERT INTO `shelters` (`id`, `shelterID`, `email`, `username`, `password`, `created_at`) VALUES
+(1, 'USID-5d9e170c97b6b', '', 'defaultShelter', '$2y$10$8UHvF0KR3CXEFFeMGKvxw.HY3Xk2e2NHqH.48BTvkoUFpbtvjrucW', '2019-10-09 11:21:16'),
+(2, 'USID-5d9e17269bb3e', '', 'adminShelter', '$2y$10$TIoWECE4xAxTLnSCX6vnfOQ1UfWpavTsX3P2w/qQciXIP3n6xL5/i', '2019-10-09 11:21:42'),
+(3, 'USID-5d9f92a064d45', '', 'autoLoginShelter', '$2y$10$ZiFQu40q.uAamsRL9NC2TOTSsCnIp9.eGDEf3I.1SWalPF4HEHpDq', '2019-10-10 14:20:48');
 
 --
 -- Indexes for dumped tables
@@ -63,7 +65,7 @@ ALTER TABLE `shelters`
 -- AUTO_INCREMENT for table `shelters`
 --
 ALTER TABLE `shelters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
