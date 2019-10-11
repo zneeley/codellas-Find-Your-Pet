@@ -78,8 +78,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: login.php");
+                // Password is correct, so start a new session
+                session_start();
+
+                // Store data in session variables
+                $_SESSION["loggedin"] = true;
+                $_SESSION["id"] = "";
+                $_SESSION["username"] = $username;
+                $_SESSION["userID"] = $param_shelterID;
+                $_SESSION["accountType"] = "shelter";
+
+                // Redirect user to welcome page
+                header("location: welcome.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
