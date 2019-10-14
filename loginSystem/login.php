@@ -1,6 +1,35 @@
 <?php
 // Initialize the session
 session_start();
+
+// Code for reCaptcha
+// Set reCaptcha Variables
+define('SITE_KEY', '6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7');
+define('SECRET_KEY', '6Lc7Cb0UAAAAAEYFNQkPzlrav9ZspKcNV4OxR3he');
+$reCaptchaVal = "";
+
+// Check the post and see if ask Google what value the user is getting from interacting with the site
+if ($_POST) {
+    
+        // Get the json info from Google using the SECRET_KEY
+        function getCaptcha($secretKey) {
+        $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".SECRET_KEY."&response={$secretKey}");
+        $Return = json_decode($response);
+        return $Return;
+        
+        }
+    
+    // Get the value
+    $Return = getCaptcha($_POST['g-recaptacha-response']);
+    
+    // See if they are human if so change the $reCaptchaVal to human
+    if ($return->sucess == true && $return->score > 0.5) {
+        $reCaptchaVal = "human";
+    } else {
+        // Redirect bot to logout to kill session and drop the at the index
+        header("location: logout.php");
+    }
+}
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
@@ -48,7 +77,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 
                 if(mysqli_stmt_num_rows($stmt) == 1){
                     // If username is in the user table 
-                    if(empty($username_err) && empty($password_err)){
+                    if(empty($username_err) && empty($password_err) && $reCaptchaVal == "human"){
                         // Prepare a select statement
                         $sql = "SELECT id, username, password, userID FROM users WHERE username = ?";
 
@@ -103,7 +132,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Assume the user is in the shelters table
                 } else {
                     // Assume the user is in the shelters table
-                        if(empty($username_err) && empty($password_err)){
+                        if(empty($username_err) && empty($password_err) && $reCaptchaVal == "human"){
                         // Prepare a select statement
                         $sql = "SELECT id, username, password, shelterID FROM shelters WHERE username = ?";
 
@@ -173,6 +202,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         body{ font: 14px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
     </style>
+    <script src="https://www.google.com/recaptcha/api.js?render=<?php echo SITE_KEY; ?>"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -193,7 +223,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="submit" class="btn btn-primary" value="Login">
             </div>
             <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
+            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" /> <br>
         </form>
-    </div>    
+    </div>
+    <script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('<?php echo SITE_KEY; ?>', {action: 'login'}).then(function(token) {
+            document.getElementById('g-recaptcha-response').value = token;
+        });
+    });
+    </script>     
 </body>
 </html>

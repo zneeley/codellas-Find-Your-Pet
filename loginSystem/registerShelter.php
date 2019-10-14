@@ -1,14 +1,80 @@
 <?php
 // Include config file
 require_once "config.php";
+
+// Code for reCaptcha
+// Set reCaptcha Variables
+define('SITE_KEY', '6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7');
+define('SECRET_KEY', '6Lc7Cb0UAAAAAEYFNQkPzlrav9ZspKcNV4OxR3he');
+$reCaptchaVal = "";
+
+// Check the post and see if ask Google what value the user is getting from interacting with the site
+if ($_POST) {
+    
+        // Get the json info from Google using the SECRET_KEY
+        function getCaptcha($secretKey) {
+        $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".SECRET_KEY."&response={$secretKey}");
+        $Return = json_decode($response);
+        return $Return;
+        
+        }
+    
+    // Get the value
+    $Return = getCaptcha($_POST['g-recaptacha-response']);
+    
+    // See if they are human if so change the $reCaptchaVal to human
+    if ($return->sucess == true && $return->score > 0.5) {
+        $reCaptchaVal = "human";
+    } else {
+        // Redirect bot to index
+        header("location: index.php");
+    }
+}
  
 // init variables
-$username = $password = $confirm_password = "";
-$username_err = $password_err = $confirm_password_err = "";
+$username = $password = $confirm_password = $email = $shelterName = "" ;
+$username_err = $password_err = $confirm_password_err = $email_err = $shelterName_err = "";
  
 // Get and process the information sent from the form
 if($_SERVER["REQUEST_METHOD"] == "POST") {
- 
+
+    // Validate Shelter Names
+    if(empty(trim($_POST["shelterName"]))){
+        $shelterName_err = "Please enter the shelders name.";     
+    } else {
+        $shelterName = trim($_POST["shelterName"]);
+    }
+    
+    // Validate email
+    if(strpos(trim($_POST["email"]), '@') == True){
+        // Prepare a select statement
+        $sql = "SELECT id FROM users WHERE email = ?";
+        
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_email);
+            
+            // Set paramaters
+            $param_email = base64_encode(trim($_POST["email"]));
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Store results
+                mysqli_stmt_store_result($stmt);
+                
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $email_err = "This email is already taken.";
+                } else {
+                    $email = base64_encode(trim($_POST["email"]));
+                }
+            } else{
+                echo "Oh No! Something went wrong. Please try again later.";
+            }
+        }
+    } else {
+        $email_err = "Please enter a valid email address ex: name@website.com";
+    }
+    
     // Validate username
     if(empty(trim($_POST["username"]))) {
         $username_err = "Please enter a username.";
@@ -62,17 +128,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($shelterName_err) && empty($email_err) && $reCaptchaVal == "human"){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO shelters (shelterID, username, password) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO shelters (shelterID, shelterName, email, username, password) VALUES (?, ?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sss", $param_shelterID, $param_username, $param_password);
+            mysqli_stmt_bind_param($stmt, "sssss", $param_shelterID, $param_shelterName, $param_email, $param_username, $param_password);
             
             // Set parameters
             $param_shelterID = uniqid("USID-");
+            $param_shelterName = $shelterName;
+            $param_email = $email;
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
             
@@ -114,12 +182,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         body{ font: 14px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
     </style>
+    <script src="https://www.google.com/recaptcha/api.js?render=<?php echo SITE_KEY; ?>"></script>
 </head>
 <body>
     <div class="wrapper">
         <h2>Shelter Sign Up</h2>
         <p>Please fill this form to create an account.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div class="form-group <?php echo (!empty($shelterName_err)) ? 'has-error' : ''; ?>">
+                <label>Shelter Name</label>
+                <input type="text" name="shelterName" class="form-control" value="<?php echo $shelterName; ?>">
+                <span class="help-block"><?php echo $shelterName_err; ?></span>
+            </div>
+            <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
+                <label>Email</label>
+                <input type="text" name="email" class="form-control" value="<?php echo $email; ?>">
+                <span class="help-block"><?php echo $email_err; ?></span>
+            </div> 
             <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                 <label>Username</label>
                 <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
@@ -140,7 +219,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="reset" class="btn btn-default" value="Reset">
             </div>
             <p>Already have an account? <a href="login.php">Login here</a>.</p>
+            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" /> <br>
         </form>
     </div>    
+    <script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('<?php echo SITE_KEY; ?>', {action: 'login'}).then(function(token) {
+            document.getElementById('g-recaptcha-response').value = token;
+        });
+    });
+    </script>
 </body>
 </html>

@@ -1,6 +1,35 @@
 <?php
 // Include config file
 require_once "config.php";
+
+// Code for reCaptcha
+// Set reCaptcha Variables
+define('SITE_KEY', '6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7');
+define('SECRET_KEY', '6Lc7Cb0UAAAAAEYFNQkPzlrav9ZspKcNV4OxR3he');
+$reCaptchaVal = "";
+
+// Check the post and see if ask Google what value the user is getting from interacting with the site
+if ($_POST) {
+    
+        // Get the json info from Google using the SECRET_KEY
+        function getCaptcha($secretKey) {
+        $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".SECRET_KEY."&response={$secretKey}");
+        $Return = json_decode($response);
+        return $Return;
+        
+        }
+    
+    // Get the value
+    $Return = getCaptcha($_POST['g-recaptacha-response']);
+    
+    // See if they are human if so change the $reCaptchaVal to human
+    if ($return->sucess == true && $return->score > 0.5) {
+        $reCaptchaVal = "human";
+    } else {
+        // Redirect bot to index
+        header("location: index.php");
+    }
+}
  
 // init variables
 $username = $password = $confirm_password = $firstName = $lastName = $email = "";
@@ -24,11 +53,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Validate email
-    if(empty(trim($_POST["email"]))){
-        $email_err = "Please enter a valid email.";     
-    } elseif(strpos(trim($_POST["email"]), '@') !== True) {
-        $email_err = "Please enter a valid email ex: name@website.com";
-    } else {
+    if(strpos(trim($_POST["email"]), '@') == True){
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE email = ?";
         
@@ -53,6 +78,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Oh No! Something went wrong. Please try again later.";
             }
         }
+    } else {
+        $email_err = "Please enter a valid email address ex: name@website.com";
     }
     
     // Validate username
@@ -108,7 +135,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err) && empty($firstName_err) && empty($lastName_err) && $reCaptchaVal == "human"){
         
         // Prepare an insert statement
         $sql = "INSERT INTO users (userID, FirstName, LastName, email ,username, password) VALUES (?, ?, ?, ?, ?, ?)";
@@ -163,6 +190,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         body{ font: 14px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
     </style>
+    <script src="https://www.google.com/recaptcha/api.js?render=<?php echo SITE_KEY; ?>"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -204,7 +232,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="reset" class="btn btn-default" value="Reset">
             </div>
             <p>Already have an account? <a href="login.php">Login here</a>.</p>
+            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" /> <br>
         </form>
-    </div>    
+    </div>
+    <script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('<?php echo SITE_KEY; ?>', {action: 'login'}).then(function(token) {
+            document.getElementById('g-recaptcha-response').value = token;
+        });
+    });
+    </script>    
 </body>
 </html>
