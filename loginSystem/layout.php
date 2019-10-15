@@ -118,7 +118,7 @@ body {
  */
 
 .register{
-    background: black url("https://www.pexels.com/photo/adorable-adult-boys-brothers-341378/") no-repeat fixed center; 
+    background: url("https://www.pexels.com/photo/adorable-adult-boys-brothers-341378/") no-repeat fixed center; 
     padding: 4%;
 }
 .register-left{
