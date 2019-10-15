@@ -41,10 +41,16 @@ Custom CSS Stylesheet
     background-repeat: no-repeat;
     background-attachment: fixed;
 	
-	/* Opacity */
-	opacity: 0;
+	
 
 }
+
+.relative {
+  position: relative;
+  left: 80px;
+  top: 150px;
+}
+
 .hero-text {
   text-align: center;
   position: absolute;
@@ -112,7 +118,7 @@ body {
  */
 
 .register{
-    background: black;
+    background: black url("https://www.pexels.com/photo/adorable-adult-boys-brothers-341378/") no-repeat fixed center; 
     padding: 4%;
 }
 .register-left{

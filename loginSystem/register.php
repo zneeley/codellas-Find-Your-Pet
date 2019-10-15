@@ -190,6 +190,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         
     <style type="text/css">
         body{ font: 14px sans-serif; }
+        h3{ font: sans-serif; }
+
         .wrapper{ width: 350px; padding: 20px; }
     </style>
 
@@ -202,8 +204,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="register">
                 <div class="row">
                     <div class="col-md-3 register-left">
-                        <h3 class="cover-heading">Hello!</h3>
-                        <p>You are 30 seconds away from making an account so that you can adopt your forever best friend!</p>
+                         <main role="main" class="inner cover">
+                            <h3 class="cover-heading">Hello!</h3><br>
+                            <p style="font-size:16px">You are 30 seconds away from making an account so that you can adopt your forever best friend!</p>
+    
+                        </main>
+                        
                     </div>
                     <div class="col-md-9 register-right">
 
@@ -256,12 +262,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="submit" class="btn btn-primary" value="Submit">
                 <input type="reset" class="btn btn-default" value="Reset">
             </div>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
+            <p>Already have an account? <a href="login.php" class="btn btn-primary">Login here</a></p>
             <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
         </form>
     </div>
         <!-- FORM end-->
-        
+        <div class="relative"><img  src ="images/image-register.png" style="width:450px;"></div>
                                 </div>
                             </div>
                  
