@@ -19,7 +19,7 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column hero-image">
   <header class="masthead mb-auto">
     <div class="inner">
-        <div class="logo-image"><img src="/images/image.png" alt="logo" width=auto height="250"></div>
+        <div class="logo-image"><img src="images/image.png" alt="logo" width=auto height="250"></div>
 <!--
       <nav class="nav nav-masthead justify-content-center">
         <a class="nav-link active" href="#">Home</a>

@@ -198,7 +198,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <style type="text/css">
         
         body{
-            background-image: url("images/register8.jpg");            
+            background-image: url("images/register_user.jpg");            
             background-size: cover;
             background-repeat: no-repeat;
             height: 100%;
@@ -266,7 +266,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 		</div>
 	</div>
 </div>
-
+  <footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>@2019 Find your Pet</p>
+    </div>
+  </footer>
     
   
                               
