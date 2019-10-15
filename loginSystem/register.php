@@ -180,14 +180,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Account Sign Up</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+    <!-- include bootstrap --> 
+    
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="layout.php">
+        
     <style type="text/css">
         body{ font: 14px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
     </style>
+
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
 </head>
 <body>
+    
+    
+
+    <div class="register">
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <h3 class="cover-heading">Hello!</h3>
+                        <p>You are 30 seconds away from making an account so that you can adopt your forever best friend!</p>
+                    </div>
+                    <div class="col-md-9 register-right">
+
+                        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Adopter</a>
+                            </li>
+                            
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        
+                                <div class="row register-form">
+    <!-- FORM start -->
     <div class="wrapper">
         <h2>Account Sign Up</h2>
         <p>Please fill this form to create an account.</p>
@@ -230,6 +260,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
         </form>
     </div>
+        <!-- FORM end-->
+        
+                                </div>
+                            </div>
+                 
+                        </div>
+                    </div>
+                </div>
+
+            </div>
     <script>
         grecaptcha.ready(function () {
             grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'contact' })

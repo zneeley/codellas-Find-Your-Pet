@@ -4,7 +4,7 @@ Custom CSS Stylesheet
 <?php 
 	header("Content-type: text/css; charset: UTF-8");
     // Logic for random background
-    $background = array('hero.jpg','hero2.jpg','hero3.jpeg','hero4.jpeg','hero5.jpeg','hero6.jpg','hero7.jpg','hero8.jpg','hero9.jpg','hero10.jpg');
+    $background = array('hero.jpg','hero2.jpg','hero3.jpeg','hero4.jpeg','hero5.jpeg','hero6.jpg','hero7.jpg','hero8.jpg','hero9.jpg','hero10.jpg','hero11.jpg', 'hero12.jpg', 'hero13.jpg', 'hero14.jpg', 'hero15.jpg');
     
     // Get a random number and set background
     $i = rand(0, count($background)-1);
@@ -12,18 +12,12 @@ Custom CSS Stylesheet
     
 ?>
 
-body, html {
-  height: 100%;
-  margin: 0;
-  font-family: arial, Helvetica, sans-serif;
-}
+
 
 .logo-image {
     width: 90vw;
     height: auto;
     position: center;
-    
-
 }
 .hero-image {  
 
@@ -41,7 +35,7 @@ body, html {
     color: white;
     
     /* Background styles */
-    background-image: linear-gradient(rgba(255,255,255, 2), rgba(0,0,0, 0.5)), url(images/<?php echo $selectedBg; ?>);
+    background-image: linear-gradient(rgba(255,255,255,255), rgba(0,0,0, 0)), url(images/<?php echo $selectedBg; ?>);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -105,21 +99,112 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #333;
 }
 
-body {
-  display: -ms-flexbox;
-  display: flex;
-  color: #fff;
-  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, 255);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, 255);
-}
+
 
 .cover-container {
   max-width: 100%;
 }
 
+/*
+ * Register Page
+ */
+
+.register{
+    background: black;
+    padding: 4%;
+}
+.register-left{
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.register-left input{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+.register-right{
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+}
+.register-left img{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+.register-left p{
+    font-weight: lighter;
+    padding: 12%;
+    margin-top: -9%;
+}
+.register .register-form{
+    padding: 10%;
+    margin-top: 10%;
+}
+.btnRegister{
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.register .nav-tabs{
+    margin-top: 3%;
+    border: none;
+    background: #0062cc;
+    border-radius: 1.5rem;
+    width: 28%;
+    float: right;
+}
+.register .nav-tabs .nav-link{
+    padding: 2%;
+    height: 34px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.register .nav-tabs .nav-link:hover{
+    border: none;
+}
+.register .nav-tabs .nav-link.active{
+    width: 100px;
+    color: #0062cc;
+    border: 2px solid #0062cc;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+.register-heading{
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    color: #495057;
+}
 
 /*
  * Header
