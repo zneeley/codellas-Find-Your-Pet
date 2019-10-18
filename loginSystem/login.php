@@ -194,7 +194,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta charset="UTF-8">
     <title>Login</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+
+	<style type="text/css">
         body{ font: 14px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
     </style>
@@ -218,19 +220,43 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Login">
             </div>
-            <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
+            <p>Don't have an account? <a href="#" id="register_btn">Sign up now.</a></p>
             <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
         </form>
     </div>
-    <script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'contact' })
-                .then(function (token) {
-                var recaptchaResponse = document.getElementById('recaptchaResponse');
-                console.log(recaptchaResponse);
-                recaptchaResponse.value = token;
-            });
-        });
-    </script>       
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </body>
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title col-12 text-secondary">Are you a...</h5>
+      </div>
+      <div class="modal-body text-center col-12">
+		<a href="registerShelter.php" class="btn btn-primary">Shelter</a>
+		<a href="register.php" class="btn btn-success">User</a>
+      </div>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+
 </html>
+<script>
+	grecaptcha.ready(function () {
+		grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'contact' })
+			.then(function (token) {
+			var recaptchaResponse = document.getElementById('recaptchaResponse');
+			console.log(recaptchaResponse);
+			recaptchaResponse.value = token;
+		});
+	});
+	
+	$('#register_btn').on('click',function(){
+		$('#myModal').modal('toggle');
+	});
+</script>  

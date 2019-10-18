@@ -41,6 +41,9 @@ Custom CSS Stylesheet
     background-repeat: no-repeat;
     background-attachment: fixed;
 	
+	/* Opacity */
+	opacity: 0;
+	
 	
 
 }
