@@ -264,16 +264,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 			</div>
 			
 		</div>
-	</div>
+    </div>
 </div>
   <footer class="mastfoot mt-auto">
     <div class="inner">
       <p>@2019 Find your Pet</p>
     </div>
   </footer>
-    
-  
-                              
+                         
     <script>
         grecaptcha.ready(function () {
             grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'contact' })

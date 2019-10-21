@@ -1,18 +1,15 @@
 <?php
 // Include config file
 require_once "config.php";
-
 // Code for reCaptcha
 // Set reCaptcha Variables
 $reCaptchaVal = "";
-
 // Check the post and see if ask Google what value the user is getting from interacting with the site
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Build POST request:
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
     $recaptcha_secret = '6Lc7Cb0UAAAAAEYFNQkPzlrav9ZspKcNV4OxR3he';
     $recaptcha_response = $_POST["recaptcha_response"];
-
     // Make and decode POST request:
     $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
     $recaptcha = json_decode($recaptcha);
@@ -33,7 +30,6 @@ $username_err = $password_err = $confirm_password_err = $email_err = $shelterNam
  
 // Get and process the information sent from the form
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-
     // Validate Shelter Names
     if(empty(trim($_POST["shelterName"]))){
         $shelterName_err = "Please enter the shelders name.";     
@@ -144,14 +140,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             if(mysqli_stmt_execute($stmt)){
                 // Password is correct, so start a new session
                 session_start();
-
                 // Store data in session variables
                 $_SESSION["loggedin"] = true;
                 $_SESSION["id"] = "";
                 $_SESSION["username"] = $username;
                 $_SESSION["userID"] = $param_shelterID;
                 $_SESSION["accountType"] = "shelter";
-
                 // Redirect user to welcome page
                 header("location: welcome.php");
             } else{
@@ -173,50 +167,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Shelter Sign Up</title>
-    
-     <!-- include bootstrap --> 
-    
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        
-	<!--Bootsrap 4 CDN-->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    
-    <!--Fontawesome CDN-->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
-        <link rel="stylesheet" href="layout.php">
-        
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style type="text/css">
-        
-        body{
-            background-image: url("images/register_shelter.jpg");            
-            background-size: cover;
-            background-repeat: no-repeat;
-            height: 100%;
-            font: 14px sans-serif;
-        }
-        h3{ font: sans-serif; }
-
+        body{ font: 14px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
     </style>
-
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
 </head>
 <body>
-    
-    <div class="container">
-	<div class="d-flex h-100">
-		<div class="card">
-			<div class="card-header">
-			 <h2>Shelter Sign Up</h2>
+    <div class="wrapper">
+        <h2>Shelter Sign Up</h2>
         <p>Please fill this form to create an account.</p>
-			
-			</div>
-			<div class="card-body">
-				
-         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group <?php echo (!empty($shelterName_err)) ? 'has-error' : ''; ?>">
                 <label>Shelter Name</label>
                 <input type="text" name="shelterName" class="form-control" value="<?php echo $shelterName; ?>">
@@ -249,21 +211,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Already have an account? <a href="login.php">Login here</a>.</p>
             <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
         </form>
-			</div>
-			
-		</div>
-	</div>
-</div>
-  <footer class="mastfoot mt-auto">
-    <div class="inner">
-      <p>@2019 Find your Pet</p>
     </div>
-  </footer>
-
-
-    
-  
-   
     <script>
         grecaptcha.ready(function () {
             grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'contact' })
