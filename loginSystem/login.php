@@ -102,7 +102,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                             $_SESSION["loggedin"] = true;
                                             $_SESSION["id"] = $id;
                                             $_SESSION["username"] = $username;
-                                            $_SESSION["userID"] = $userID;
+                                            $_SESSION["accountID"] = $userID;
                                             $_SESSION["accountType"] = "user";
 
                                             // Redirect user to welcome page
@@ -157,7 +157,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                             $_SESSION["loggedin"] = true;
                                             $_SESSION["id"] = $id;
                                             $_SESSION["username"] = $username;
-                                            $_SESSION["shelterID"] = $shelterID;
+                                            $_SESSION["accountID"] = $shelterID;
                                             $_SESSION["accountType"] = "shelter";
 
                                             // Redirect user to welcome page
@@ -293,7 +293,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </html>
 <script>
 	grecaptcha.ready(function () {
-		grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'contact' })
+		grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'login' })
 			.then(function (token) {
 			var recaptchaResponse = document.getElementById('recaptchaResponse');
 			console.log(recaptchaResponse);
