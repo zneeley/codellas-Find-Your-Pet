@@ -57,7 +57,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 if(mysqli_stmt_num_rows($stmt) == 1){
                     $email_err = "This email is already taken.";
                 } else {
-                    $email = base64_encode(trim($_POST["email"]));
+                    $email = trim($_POST["email"]);
+                    $emailEncoded = base64_encode(trim($_POST["email"]));
                 }
             } else{
                 echo "Oh No! Something went wrong. Please try again later.";
@@ -132,7 +133,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             // Set parameters
             $param_shelterID = uniqid("USID-");
             $param_shelterName = $shelterName;
-            $param_email = $email;
+            $param_email = $emailEncoded;
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
             
@@ -144,7 +145,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["loggedin"] = true;
                 $_SESSION["id"] = "";
                 $_SESSION["username"] = $username;
-                $_SESSION["userID"] = $param_shelterID;
+                $_SESSION["accountID"] = $param_shelterID;
                 $_SESSION["accountType"] = "shelter";
                 // Redirect user to welcome page
                 header("location: welcome.php");
@@ -214,7 +215,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <script>
         grecaptcha.ready(function () {
-            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'contact' })
+            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'register' })
                 .then(function (token) {
                 var recaptchaResponse = document.getElementById('recaptchaResponse');
                 console.log(recaptchaResponse);

@@ -67,7 +67,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 if(mysqli_stmt_num_rows($stmt) == 1){
                     $email_err = "This email is already taken.";
                 } else {
-                    $email = base64_encode(trim($_POST["email"]));
+                    $email = trim($_POST["email"]);
+                    $emailEncoded = base64_encode(trim($_POST["email"]));
                 }
             } else{
                 echo "Oh No! Something went wrong. Please try again later.";
@@ -143,7 +144,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $param_userID = uniqid("UUID-");
             $param_firstName = $firstName;
             $param_lastName = $lastName;
-            $param_email = $email;
+            $param_email = $emailEncoded;
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
             
@@ -156,11 +157,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["loggedin"] = true;
                 $_SESSION["id"] = "";
                 $_SESSION["username"] = $username;
-                $_SESSION["userID"] = $param_userID;
+                $_SESSION["accountID"] = $param_userID;
                 $_SESSION["accountType"] = "user";
 
                 // Redirect user to welcome page
-                header("location: welcome.php");
+                header("location: createProfile.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -183,7 +184,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	
     <!-- include bootstrap --> 
     
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         
@@ -261,9 +262,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Already have an account? <a href="login.php" class="btn btn-primary">Login here</a></p>
             <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
         </form>
-			</div>
-			
-		</div>
+	</div>		
+	</div>
     </div>
 </div>
   <footer class="mastfoot mt-auto">
@@ -274,7 +274,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                          
     <script>
         grecaptcha.ready(function () {
-            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'contact' })
+            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'register' })
                 .then(function (token) {
                 var recaptchaResponse = document.getElementById('recaptchaResponse');
                 console.log(recaptchaResponse);
