@@ -4,7 +4,8 @@
 require_once "config.php";
 
 // init variables
-$profileImgDir = $profileBio = "";
+$fileDir = $fileNameNew = $accountBio = $profileImgDir = $profileBio = "";
+$imgExt_err = $imgSize_err = $bio_err = "";
 
 // Start Session
 session_start();
@@ -66,8 +67,96 @@ if($stmt = mysqli_prepare($link, $sql)){
     mysqli_stmt_close($stmt);
         
 }
+
+// Edit mode
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Upload image system 
+    if(isset($_FILES['image'])){
+        // Get images data
+        $fileName = $_FILES['image']['name'];
+        $fileSize = $_FILES['image']['size'];
+        $fileTmp = $_FILES['image']['tmp_name'];
+        $fileType = $_FILES['image']['type'];
+        $fileExtTemp = explode('.',$_FILES['image']['name']);
+        $fileExt = strtolower(end($fileExtTemp));
+
+        // List of allowed extensins
+        $extensions = array("jpeg","jpg","png");
+
+        // Check to see if the files extenion is allowed
+        if(in_array($fileExt,$extensions)=== false){
+            $imgExt_err = "File not allowed, please choose a JPEG or PNG file.";
+        }
+
+        // Check to see if the size is under 5mb
+        if($fileSize > 5000000){
+            $imgSize_err = 'File size must be smaller than 5 MB';
+        }
+        
+        // If file passes checks push delete old image
+        if(file_exists('uploadContent/userImages/'.$_SESSION['accountID'].'.png')) {
+            // Delete png file
+            unlink('uploadContent/userImages/'.$_SESSION['accountID'].'.png');
+        }
+        
+        if(file_exists('uploadContent/userImages/'.$_SESSION['accountID'].'.jpg')) {
+            // Delete jpg file
+            unlink('uploadContent/userImages/'.$_SESSION['accountID'].'.jpg');
+        }
+        
+        if(file_exists('uploadContent/userImages/'.$_SESSION['accountID'].'.jpeg')) {
+            // Delete jpeg file
+            unlink('uploadContent/userImages/'.$_SESSION['accountID'].'.jpeg');
+        }
+        
+        // Upload File
+        $fileNameNew = $_SESSION['accountID'].".".$fileExt;
+        $fileDir = "uploadContent/userImages/".$fileNameNew;
+        move_uploaded_file($fileTmp,"uploadContent/userImages/".$fileNameNew);
+    }
+    
+    // Check to see if textarea is empty
+    if(isset($_POST['bio'])){
+       // Check to see if the bio is empty
+        if (!strlen(trim($_POST['bio']))){
+            $bio_err = "Please type a Bio.";
+        } else {
+            $accountBio = $_POST['bio'];
+        }
+    }
+    
+    // Store information into database and upload image
+    if(isset($_FILES['image']) && isset($_POST['bio'])) {
+        if (empty($bio_err) && empty($imgExt_err) && empty($imgSize_err)) {
+            // Prepare an insert statement
+            $sql = "UPDATE users SET profileImage = ?, userBio = ? WHERE userID = ?";
+
+            if($stmt = mysqli_prepare($link, $sql)){
+                // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "sss", $param_profileImage, $param_userBio, $param_userID);
+
+                // Set parameters
+                $param_profileImage = base64_encode($fileDir);
+                $param_userBio = $accountBio;
+                $param_userID = $_SESSION['accountID'];
+
+                if(mysqli_stmt_execute($stmt)){
+                    // Redirect user to welcome page
+                    header("location: profileViewer.php");
+                }
+
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+
+        } 
+
+    }
 // Close connection
-mysqli_close($link);
+mysqli_close($link);    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -88,17 +177,47 @@ mysqli_close($link);
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
 </head>
     <body>
-    <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile Creation.</label><br>
-    <label>Profile Image:</label><br>
-    <img src="<?php echo $profileImgDir; ?>" alt="Your image"><br>
-    <label>My Bio:</label><br>
-    <p><?php echo $profileBio; ?></p>
-    
-    <a href="welcome.php" class="btn btn-primary">Home</a>
-    <button onclick="" class="btn btn-warning">Edit</button><br>
+        
+        <div id="normal">
+            <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile.</label><br>
+            <label>Profile Image:</label><br>
+            <img src="<?php echo $profileImgDir; ?>" alt="Your image"><br>
+            <label>My Bio:</label><br>
+            <p><?php echo $profileBio; ?></p>
+            <a href="welcome.php" class="btn btn-primary">Home</a>
+            <button id="toggle-button" class="btn btn-warning">Edit</button><br>
+        </div>
+        
+        <div id="editer" style="display:none;s">
+            <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile Creation.</label><br>
+            <form action="" method="POST" enctype="multipart/form-data">
+                <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
+                    <label>Upload a Profile Picture:</label><br>
+                    <input type="file" name="image" />
+                    <br><span class="help-block"><?php echo $imgExt_err; ?></span>
+                    <span class="help-block"><?php echo $imgSize_err; ?></span>
+                </div>
+
+                <div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
+                    <br><label>Your Bio:</label><br>
+                    <textarea rows="4" cols="50" name="bio"></textarea><br>
+                    <span class="help-block"><?php echo $bio_err; ?></span>
+                </div>
+                <input type="submit" class="btn btn-success" value="Save">
+                <a href="profileViewer.php" class="btn btn-warning">Cancel</a>
+                <input type="hidden" value="" name="enableEdit" id="enableEdit"/><br>
+            </form>    
+        </div> 
+    <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
     <img src="images/profileTemplate.png" alt="USE THIS AS A GUIDE!!!!!!!">
-    <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
     <script>
+        // Edit mode
+        $("#toggle-button").on("click", function(){
+            $("#editer").show();
+            $("#normal").hide();
+            $("#enableEdit").val('Y');
+        });
+        
         grecaptcha.ready(function () {
             grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
                 .then(function (token) {

@@ -81,7 +81,7 @@ if(isset($_POST['bio'])){
 }
 
 // Store information into database and upload image
-if(isset($_FILES['image']) && isset($_FILES['image'])) {
+if(isset($_FILES['image']) && isset($_POST['bio'])) {
     if (empty($bio_err) && empty($imgExt_err) && empty($imgSize_err)) {
         // Prepare an insert statement
         $sql = "UPDATE users SET profileImage = ?, userBio = ? WHERE userID = ?";
