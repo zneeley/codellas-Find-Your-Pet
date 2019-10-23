@@ -159,6 +159,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["username"] = $username;
                 $_SESSION["accountID"] = $param_userID;
                 $_SESSION["accountType"] = "user";
+                $_SESSION["accountHolderName"] = $firstName;
 
                 // Redirect user to welcome page
                 header("location: createProfile.php");

@@ -81,25 +81,34 @@ if(isset($_POST['bio'])){
 }
 
 // Store information into database and upload image
-if (empty($bio_err) && empty($imgExt_err) && empty($imgSize_err)) {
-    // Prepare an insert statement
-    $sql = "UPDATE users SET profileImage = ?, userBio = ? WHERE userID = ?";
-    
-    if($stmt = mysqli_prepare($link, $sql)){
-        // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "sss", $param_profileImage, $param_userBio, $param_userID);
-        
-        // Set parameters
-        $param_profileImage = base64_encode($fileDir);
-        $param_userBio = $accountBio;
-        $param_userID = $_SESSION['accountID'];
-        
-        if(mysqli_stmt_execute($stmt)){
-            // Redirect user to welcome page
-            //header("location: welcome.php");
+if(isset($_FILES['image']) && isset($_FILES['image'])) {
+    if (empty($bio_err) && empty($imgExt_err) && empty($imgSize_err)) {
+        // Prepare an insert statement
+        $sql = "UPDATE users SET profileImage = ?, userBio = ? WHERE userID = ?";
+
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "sss", $param_profileImage, $param_userBio, $param_userID);
+
+            // Set parameters
+            $param_profileImage = base64_encode($fileDir);
+            $param_userBio = $accountBio;
+            $param_userID = $_SESSION['accountID'];
+
+            if(mysqli_stmt_execute($stmt)){
+                // Redirect user to welcome page
+                header("location: welcome.php");
+            }
+
         }
         
-    }
+        // Close statement
+        mysqli_stmt_close($stmt);
+        
+    } 
+    
+    // Close connection
+    mysqli_close($link);
 }
 
 ?>
@@ -122,7 +131,7 @@ if (empty($bio_err) && empty($imgExt_err) && empty($imgSize_err)) {
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
 </head>
     <body>
-      
+        <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile Creation.</label><br>
         <form action="" method="POST" enctype="multipart/form-data">
             <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
                 <label>Upload a Profile Picture:</label><br>

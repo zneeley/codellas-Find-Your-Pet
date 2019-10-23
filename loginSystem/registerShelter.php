@@ -147,6 +147,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["username"] = $username;
                 $_SESSION["accountID"] = $param_shelterID;
                 $_SESSION["accountType"] = "shelter";
+                $_SESSION["accountHolderName"] = $shelterName;
+                
                 // Redirect user to welcome page
                 header("location: welcome.php");
             } else{

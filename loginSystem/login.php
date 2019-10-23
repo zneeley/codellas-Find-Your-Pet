@@ -75,7 +75,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     // If username is in the user table 
                     if(empty($username_err) && empty($password_err) && $reCaptchaVal == "human"){
                         // Prepare a select statement
-                        $sql = "SELECT id, username, password, userID FROM users WHERE username = ?";
+                        $sql = "SELECT id, username, password, userID, FirstName FROM users WHERE username = ?";
 
                         if($stmt = mysqli_prepare($link, $sql)){
                             // Bind variables to the prepared statement as parameters
@@ -92,7 +92,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 // Check if username exists, if yes then verify password
                                 if(mysqli_stmt_num_rows($stmt) == 1){                    
                                     // Bind result variables
-                                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $userID);
+                                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $userID, $firstName);
                                     if(mysqli_stmt_fetch($stmt)){
                                         if(password_verify($password, $hashed_password)){
                                             // Password is correct, so start a new session
@@ -104,7 +104,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                             $_SESSION["username"] = $username;
                                             $_SESSION["accountID"] = $userID;
                                             $_SESSION["accountType"] = "user";
-
+                                            $_SESSION["accountHolderName"] = $firstName;
+                                            
                                             // Redirect user to welcome page
                                             header("location: welcome.php");
                                         } else{
@@ -130,7 +131,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     // Assume the user is in the shelters table
                         if(empty($username_err) && empty($password_err) && $reCaptchaVal == "human"){
                         // Prepare a select statement
-                        $sql = "SELECT id, username, password, shelterID FROM shelters WHERE username = ?";
+                        $sql = "SELECT id, username, password, shelterID, shelterName FROM shelters WHERE username = ?";
 
                         if($stmt = mysqli_prepare($link, $sql)){
                             // Bind variables to the prepared statement as parameters
@@ -147,7 +148,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 // Check if username exists, if yes then verify password
                                 if(mysqli_stmt_num_rows($stmt) == 1){                    
                                     // Bind result variables
-                                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $shelterID);
+                                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $shelterID, $shelterName);
                                     if(mysqli_stmt_fetch($stmt)){
                                         if(password_verify($password, $hashed_password)){
                                             // Password is correct, so start a new session
@@ -159,6 +160,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                             $_SESSION["username"] = $username;
                                             $_SESSION["accountID"] = $shelterID;
                                             $_SESSION["accountType"] = "shelter";
+                                            $_SESSION["accountHolderName"] = $shelterName;
 
                                             // Redirect user to welcome page
                                             header("location: welcome.php");

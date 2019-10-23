@@ -3,10 +3,20 @@
 // Start Session
 session_start();
 
+//init variables
+$profileType = "";
+
 // Check to see if the username is still logged in, if not send them to login
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
+}
+
+if ($_SESSION['accountType'] === "user") {
+    $profileType = 'profileViewer.php';
+    
+} else {
+    $profileType = 'profileShelterViewer.php';
 }
 
 ?>
@@ -23,11 +33,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </head>
 <body>
     <div class="page-header">
-        <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to our site.</h1>
+        <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?></b>. Welcome to our site.</h1>
     </div>
     <p>
         <a href="passwordReset.php" class="btn btn-warning">Reset Your Password</a>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
+        <a href="<?php echo $profileType; ?>" class="btn btn-primary">View Your Profile</a>
     </p>
 </body>
 </html>
