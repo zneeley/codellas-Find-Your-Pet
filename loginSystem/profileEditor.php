@@ -1,5 +1,4 @@
 <?php
-
 //Include the config.php file
 require_once "config.php";
 
@@ -15,10 +14,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
-
-// Code for reCaptcha
-// Set reCaptcha Variables
-$reCaptchaVal = "";
 
 // Check the post and see if ask Google what value the user is getting from interacting with the site
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,33 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("location: logout.php");
         }
     }
-}
-
-// Prepare a select statement
-$sql = "SELECT profileImage, userBio FROM users WHERE userID = ?";
-
-if($stmt = mysqli_prepare($link, $sql)){
-    // Bind variables to the prepared statement as parameters
-    mysqli_stmt_bind_param($stmt, "s", $param_userID);
-
-    // Set parameters
-    $param_userID = $_SESSION['accountID'];
-    
-    // Attempt to execute the prepared statement
-    if(mysqli_stmt_execute($stmt)){
-        // Store result
-        mysqli_stmt_store_result($stmt);
-        
-        mysqli_stmt_bind_result($stmt, $param_userImage, $param_userBio);
-        if(mysqli_stmt_fetch($stmt)){
-            $profileBio = $param_userBio;
-            $profileImgDir = base64_decode($param_userImage);
-            
-        }
-    }
-    // Close statement
-    mysqli_stmt_close($stmt);
-        
 }
 
 // Edit mode
@@ -124,9 +92,40 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $accountBio = $_POST['bio'];
         }
     }
-    
+}
+
+// Edit mode
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+// Store information into database and upload image
+    if(isset($_FILES['image']) && isset($_POST['bio'])) {
+        if (empty($bio_err) && empty($imgExt_err) && empty($imgSize_err)) {
+            // Prepare an insert statement
+            $sql = "UPDATE users SET profileImage = ?, userBio = ? WHERE userID = ?";
+
+            if($stmt = mysqli_prepare($link, $sql)){
+                // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "sss", $param_profileImage, $param_userBio, $param_userID);
+
+                // Set parameters
+                $param_profileImage = base64_encode($fileDir);
+                $param_userBio = $accountBio;
+                $param_userID = $_SESSION['accountID'];
+
+                if(mysqli_stmt_execute($stmt)){
+                    // Redirect user to welcome page
+                    header("location: profileViewer.php");
+                }
+
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+
+        } 
+
+    }
 // Close connection
-mysqli_close($link);    
+mysqli_close($link); 
 }
 
 ?>
@@ -148,19 +147,8 @@ mysqli_close($link);
     <link rel="stylesheet" href="layout.php">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
 </head>
-    <body>
-        
-        <div id="normal">
-            <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile.</label><br>
-            <label>Profile Image:</label><br>
-            <img src="<?php echo $profileImgDir; ?>" alt="Your image"><br>
-            <label>My Bio:</label><br>
-            <p><?php echo $profileBio; ?></p>
-            <a href="welcome.php" class="btn btn-primary">Home</a>
-            <a href="profileEditor.php" class="btn btn-warning">Edit</a><br>
-        </div>
-        
-        <div id="editer" style="display:none;s">
+    <body>        
+        <div id="editer">
             <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile Creation.</label><br>
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
@@ -177,19 +165,11 @@ mysqli_close($link);
                 </div>
                 <input type="submit" class="btn btn-success" value="Save">
                 <a href="profileViewer.php" class="btn btn-warning">Cancel</a>
-                <input type="hidden" value="" name="enableEdit" id="enableEdit"/><br>
             </form>    
         </div> 
     <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
     <img src="images/profileTemplate.png" alt="USE THIS AS A GUIDE!!!!!!!">
     <script>
-        // Edit mode
-        $("#toggle-button").on("click", function(){
-            $("#editer").show();
-            $("#normal").hide();
-            $("#enableEdit").val('Y');
-        });
-        
         grecaptcha.ready(function () {
             grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
                 .then(function (token) {
