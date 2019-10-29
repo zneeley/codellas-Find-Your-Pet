@@ -151,13 +151,19 @@ mysqli_close($link);
     <body>
         
         <div id="normal">
-            <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile.</label><br>
-            <label>Profile Image:</label><br>
-            <img src="<?php echo $profileImgDir; ?>" alt="Your image"><br>
-            <label>My Bio:</label><br>
-            <p><?php echo $profileBio; ?></p>
-            <a href="welcome.php" class="btn btn-primary">Home</a>
-            <a href="profileEditor.php" class="btn btn-warning">Edit</a><br>
+			<div class="card w-auto">
+			  <div class="card-header">
+				  <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile.</label><br>
+			  </div>
+			  <div class="card-body">
+				  <img class="profile_pic" src="<?php echo $profileImgDir; ?>" alt="Your image">
+				  <p class="profile_text"><?php echo $profileBio; ?></p>
+			  </div>
+			  <div class="card-footer">
+			      <a href="welcome.php" class="btn btn-primary">Home</a>
+			      <a href="profileEditor.php" class="btn btn-warning">Edit</a><br>
+			  </div>
+			</div>
         </div>
         
         <div id="editer" style="display:none;s">
@@ -181,7 +187,6 @@ mysqli_close($link);
             </form>    
         </div> 
     <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
-    <img src="images/profileTemplate.png" alt="USE THIS AS A GUIDE!!!!!!!">
     <script>
         // Edit mode
         $("#toggle-button").on("click", function(){

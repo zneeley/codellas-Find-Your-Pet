@@ -239,3 +239,19 @@ margin-left: 4px;
 .mastfoot {
   color: rgba(255, 255, 255, .5);
 }
+
+/*
+ * Profile Picture
+ */
+ .profile_pic{
+   border-radius: 100%;
+   width: 100px;
+   height: 100px;
+   shape-outside: circle();
+   float:left;
+   margin-right: 10px;
+   margin-bottom: 10px;
+ }
+ .profile_text{
+	 text-align: justify;
+ }
