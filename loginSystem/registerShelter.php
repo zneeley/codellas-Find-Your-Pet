@@ -40,11 +40,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate email
     if(strpos(trim($_POST["email"]), '@') == True){
         // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE email = ?";
+        $sql = "SELECT id 
+        FROM users 
+        WHERE email = ?
+        UNION
+        SELECT id 
+        FROM shelters 
+        WHERE username = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_email);
+            mysqli_stmt_bind_param($stmt, "ss", $param_email, $param_email);
             
             // Set paramaters
             $param_email = base64_encode(trim($_POST["email"]));
@@ -73,11 +79,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $username_err = "Please enter a username.";
     } else {
         // Prepare a select statement
-        $sql = "SELECT id FROM shelters WHERE username = ?";
+        $sql = "
+        SELECT id 
+        FROM shelters 
+        WHERE username = ?
+        UNION
+        SELECT id 
+        FROM users 
+        WHERE username = ?
+        ";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_username);
             
             // Set parameters
             $param_username = trim($_POST["username"]);

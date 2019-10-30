@@ -27,10 +27,17 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `shelters`
 --
+CREATE DATABASE IF NOT EXISTS `findyourpet`;
+
+USE `findyourpet`;
+
+DROP TABLE IF EXISTS `shelters`;
+
 
 CREATE TABLE `shelters` (
   `id` int(11) NOT NULL,
   `shelterID` varchar(100) NOT NULL,
+  `shelterName` varchar(50) NOT NULL,
   `email` varchar(30) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -68,6 +75,8 @@ ALTER TABLE `shelters`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
+DROP TABLE IF EXISTS `users`;
+
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `userID` varchar(100) NOT NULL,
@@ -76,6 +85,8 @@ CREATE TABLE `users` (
   `email` varchar(30) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `profileImage`text DEFAULT NULL,
+  `userBio` text DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
