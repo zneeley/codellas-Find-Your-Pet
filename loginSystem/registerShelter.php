@@ -164,7 +164,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["accountHolderName"] = $shelterName;
                 
                 // Redirect user to welcome page
-                header("location: welcome.php");
+                header("location: createProfileShelter.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -184,49 +184,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Shelter Sign Up</title>
-    
-     <!-- include bootstrap --> 
-    
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        
-	<!--Bootsrap 4 CDN-->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    
-    <!--Fontawesome CDN-->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
-        <link rel="stylesheet" href="layout.php">
-        
     <style type="text/css">
-        
-        body{
-            background-image: url("images/register_shelter.jpg");            
-            background-size: cover;
-            background-repeat: no-repeat;
-            height: 100%;
-            font: 14px sans-serif;
-        }
-        h3{ font: sans-serif; }
-
+        body{ font: 14px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
     </style>
-
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
 </head>
 <body>
-    
-    <div class="container">
-	<div class="d-flex h-100">
-		<div class="card">
-			<div class="card-header">
-			 <h2>Shelter Sign Up</h2>
-                <p>Please fill this form to create an account.</p>
-			
-			</div>
-			<div class="card-body">
-				
+    <div class="wrapper">
+        <h2>Shelter Sign Up</h2>
+        <p>Please fill this form to create an account.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group <?php echo (!empty($shelterName_err)) ? 'has-error' : ''; ?>">
                 <label>Shelter Name</label>
@@ -260,18 +228,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Already have an account? <a href="login.php">Login here</a>.</p>
             <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
         </form>
-	</div>		
-	</div>
     </div>
-</div>
-  <footer class="mastfoot mt-auto">
-    <div class="inner">
-      <p>@2019 Find your Pet</p>
-    </div>
-  </footer>
     <script>
         grecaptcha.ready(function () {
-            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'register' })
+            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'contact' })
                 .then(function (token) {
                 var recaptchaResponse = document.getElementById('recaptchaResponse');
                 console.log(recaptchaResponse);

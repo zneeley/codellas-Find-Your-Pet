@@ -65,65 +65,6 @@ if($stmt = mysqli_prepare($link, $sql)){
     }
     // Close statement
     mysqli_stmt_close($stmt);
-        
-}
-
-// Edit mode
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Upload image system 
-    if(isset($_FILES['image'])){
-        // Get images data
-        $fileName = $_FILES['image']['name'];
-        $fileSize = $_FILES['image']['size'];
-        $fileTmp = $_FILES['image']['tmp_name'];
-        $fileType = $_FILES['image']['type'];
-        $fileExtTemp = explode('.',$_FILES['image']['name']);
-        $fileExt = strtolower(end($fileExtTemp));
-
-        // List of allowed extensins
-        $extensions = array("jpeg","jpg","png");
-
-        // Check to see if the files extenion is allowed
-        if(in_array($fileExt,$extensions)=== false){
-            $imgExt_err = "File not allowed, please choose a JPEG or PNG file.";
-        }
-
-        // Check to see if the size is under 5mb
-        if($fileSize > 5000000){
-            $imgSize_err = 'File size must be smaller than 5 MB';
-        }
-        
-        // If file passes checks push delete old image
-        if(file_exists('uploadContent/userImages/'.$_SESSION['accountID'].'.png')) {
-            // Delete png file
-            unlink('uploadContent/userImages/'.$_SESSION['accountID'].'.png');
-        }
-        
-        if(file_exists('uploadContent/userImages/'.$_SESSION['accountID'].'.jpg')) {
-            // Delete jpg file
-            unlink('uploadContent/userImages/'.$_SESSION['accountID'].'.jpg');
-        }
-        
-        if(file_exists('uploadContent/userImages/'.$_SESSION['accountID'].'.jpeg')) {
-            // Delete jpeg file
-            unlink('uploadContent/userImages/'.$_SESSION['accountID'].'.jpeg');
-        }
-        
-        // Upload File
-        $fileNameNew = $_SESSION['accountID'].".".$fileExt;
-        $fileDir = "uploadContent/userImages/".$fileNameNew;
-        move_uploaded_file($fileTmp,"uploadContent/userImages/".$fileNameNew);
-    }
-    
-    // Check to see if textarea is empty
-    if(isset($_POST['bio'])){
-       // Check to see if the bio is empty
-        if (!strlen(trim($_POST['bio']))){
-            $bio_err = "Please type a Bio.";
-        } else {
-            $accountBio = $_POST['bio'];
-        }
-    }
     
 // Close connection
 mysqli_close($link);    
@@ -160,41 +101,12 @@ mysqli_close($link);
 				  <p class="profile_text"><?php echo $profileBio; ?></p>
 			  </div>
 			  <div class="card-footer">
-			      <a href="welcome.php" class="btn btn-primary">Home</a>
-			      <a href="profileEditor.php" class="btn btn-warning">Edit</a><br>
-			  </div>
-			</div>
-        </div>
-        
-        <div id="editer" style="display:none;s">
-            <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile Creation.</label><br>
-            <form action="" method="POST" enctype="multipart/form-data">
-                <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
-                    <label>Upload a Profile Picture:</label><br>
-                    <input type="file" name="image" />
-                    <br><span class="help-block"><?php echo $imgExt_err; ?></span>
-                    <span class="help-block"><?php echo $imgSize_err; ?></span>
+	            <a href="welcome.php" class="btn btn-primary">Home</a>
+                    <a href="profileEditor.php" class="btn btn-warning">Edit</a><br>
                 </div>
-
-                <div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
-                    <br><label>Your Bio:</label><br>
-                    <textarea rows="4" cols="50" name="bio"></textarea><br>
-                    <span class="help-block"><?php echo $bio_err; ?></span>
-                </div>
-                <input type="submit" class="btn btn-success" value="Save">
-                <a href="profileViewer.php" class="btn btn-warning">Cancel</a>
-                <input type="hidden" value="" name="enableEdit" id="enableEdit"/><br>
-            </form>    
-        </div> 
+            </div>
     <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
     <script>
-        // Edit mode
-        $("#toggle-button").on("click", function(){
-            $("#editer").show();
-            $("#normal").hide();
-            $("#enableEdit").val('Y');
-        });
-        
         grecaptcha.ready(function () {
             grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
                 .then(function (token) {
