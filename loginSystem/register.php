@@ -231,61 +231,59 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     
     <div class="container">
 	<div class="d-flex h-100">
-		<div class="card">
-			<div class="card-header">
-			 <h2>Account Sign Up</h2>
-                <p>Please fill this form to create an account.</p>
-			
-			</div>
-			<div class="card-body">
-				
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group <?php echo (!empty($firstName_err)) ? 'has-error' : ''; ?>">
-                <label>First Name</label>
-                <input type="text" name="firstName" class="form-control" value="<?php echo $firstName; ?>">
-                <span class="help-block"><?php echo $firstName_err; ?></span>
+            <div class="card">
+		<div class="card-header">
+                    <h2>Account Sign Up</h2>
+                    <p>Please fill this form to create an account.</p>
+		</div>
+		<div class="card-body">		
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <div class="form-group <?php echo (!empty($firstName_err)) ? 'has-error' : ''; ?>">
+                            <label>First Name</label>
+                            <input type="text" name="firstName" class="form-control" value="<?php echo $firstName; ?>">
+                            <span class="help-block"><?php echo $firstName_err; ?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($lastName_err)) ? 'has-error' : ''; ?>">
+                            <label>Last Name</label>
+                            <input type="text" name="lastName" class="form-control" value="<?php echo $lastName; ?>">
+                            <span class="help-block"><?php echo $lastName_err; ?></span>
+                        </div> 
+                        <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
+                            <label>Email</label>
+                            <input type="text" name="email" class="form-control" value="<?php echo $email; ?>">
+                            <span class="help-block"><?php echo $email_err; ?></span>
+                        </div> 
+                        <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+                            <label>Username</label>
+                            <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
+                            <span class="help-block"><?php echo $username_err; ?></span>
+                        </div>   
+                        <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
+                            <span class="help-block"><?php echo $password_err; ?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
+                            <label>Confirm Password</label>
+                            <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
+                            <span class="help-block"><?php echo $confirm_password_err; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Submit">
+                            <input type="reset" class="btn btn-default" value="Reset">
+                        </div>
+                        <p>Already have an account? <a href="login.php" class="btn btn-primary">Login here</a></p>
+                        <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
+                    </form>
+                </div>		
             </div>
-            <div class="form-group <?php echo (!empty($lastName_err)) ? 'has-error' : ''; ?>">
-                <label>Last Name</label>
-                <input type="text" name="lastName" class="form-control" value="<?php echo $lastName; ?>">
-                <span class="help-block"><?php echo $lastName_err; ?></span>
-            </div> 
-            <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
-                <label>Email</label>
-                <input type="text" name="email" class="form-control" value="<?php echo $email; ?>">
-                <span class="help-block"><?php echo $email_err; ?></span>
-            </div> 
-            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
-                <span class="help-block"><?php echo $username_err; ?></span>
-            </div>   
-            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
-                <span class="help-block"><?php echo $password_err; ?></span>
-            </div>
-            <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
-                <label>Confirm Password</label>
-                <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
-                <span class="help-block"><?php echo $confirm_password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Submit">
-                <input type="reset" class="btn btn-default" value="Reset">
-            </div>
-            <p>Already have an account? <a href="login.php" class="btn btn-primary">Login here</a></p>
-            <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
-        </form>
-	</div>		
-	</div>
+        </div>
     </div>
-</div>
-  <footer class="mastfoot mt-auto">
-    <div class="inner">
-      <p>@2019 Find your Pet</p>
-    </div>
-  </footer>
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <p>@2019 Find your Pet</p>
+      </div>
+    </footer>
                          
     <script>
         grecaptcha.ready(function () {

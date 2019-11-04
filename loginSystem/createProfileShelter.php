@@ -172,7 +172,7 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
             
             <div class="form-group <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
                 <br><label>Shelter Phone Number:</label><br>
-                <input type="text" name="telphone" placeholder="888 888 8888"/><br>
+                <input type="tel" name="telphone" placeholder="888-888-8888" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
                 <span class="help-block"><?php echo $phone_err; ?></span>
             </div>
             <input type="submit" class="btn btn-primary" value="Submit">
