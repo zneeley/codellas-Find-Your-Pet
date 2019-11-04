@@ -136,7 +136,6 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
 <head>
     <meta charset="UTF-8">
     <title>Your Profile</title>
-    
 <!-- include bootstrap --> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
@@ -147,49 +146,62 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="layout.php">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
+
+	<style type="text/css">
+        body{
+            background-image: url(images/shelter_edit.jpg);            
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+        }
+	</style>
+
 </head>
-    <body>        
-        <div id="editer">
-            <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile Creation.</label><br>
-            <form action="" method="POST" enctype="multipart/form-data">
-                <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
-                    <label>Upload a Profile Picture:</label><br>
-                    <input type="file" name="image" />
-                    <br><span class="help-block"><?php echo $imgExt_err; ?></span>
-                    <span class="help-block"><?php echo $imgSize_err; ?></span>
-                </div>
+    <body>    
+		<div class="text-center card m-5" style="width: 25rem">
+			<div id="editer">
+				<h1 class="card-header">Shelter Edit</h1><br>
+				<form action="" method="POST" enctype="multipart/form-data">
+					<div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
+						<h5>Edit Profile Picture</h5><br>
+						<input type="file" name="image" />
+						<br><span class="help-block"><?php echo $imgExt_err; ?></span>
+						<span class="help-block"><?php echo $imgSize_err; ?></span>
+					</div>
 
-                <div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
-                    <br><label>Your Bio:</label><br>
-                    <textarea rows="4" cols="50" name="bio"></textarea><br>
-                    <span class="help-block"><?php echo $bio_err; ?></span>
-                </div>
-                
-                <div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
-                    <br><label>Shelter Address:</label><br>
-                    <textarea rows="1" cols="50" name="address"></textarea><br>
-                    <span class="help-block"><?php echo $address_err; ?></span>
-                </div>
+					<div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
+						<br><h5>Your Bio:</h5><br>
+						<textarea rows="4" cols="50" name="bio"></textarea><br>
+						<span class="help-block"><?php echo $bio_err; ?></span>
+					</div>
+					
+					<div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
+						<br><h5>Shelter Address:</h5><br>
+						<textarea rows="1" cols="50" name="address"></textarea><br>
+						<span class="help-block"><?php echo $address_err; ?></span>
+					</div>
 
-                <div class="form-group <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
-                    <br><label>Shelter Phone Number:</label><br>
-                    <input type="tel" name="telphone" placeholder="888-888-8888" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
-                    <span class="help-block"><?php echo $phone_err; ?></span>
-                    <input type="submit" class="btn btn-success" value="Save">
-                    <a href="profileShelterViewer.php" class="btn btn-warning">Cancel</a>
-                </form>    
-        </div> 
-    <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
-    <img src="images/profileTemplate.png" alt="USE THIS AS A GUIDE!!!!!!!">
-    <script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
-                .then(function (token) {
-                var recaptchaResponse = document.getElementById('recaptchaResponse');
-                console.log(recaptchaResponse);
-                recaptchaResponse.value = token;
-            });
-        });
-    </script> 
+					<div class="form-group <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
+						<br><h5>Shelter Phone Number:</h5><br>
+						<input type="tel" name="telphone" placeholder="888-888-8888" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
+						<span class="help-block"><?php echo $phone_err; ?></span>
+						<div class="m-5">
+							<input type="submit" class="btn btn-success" value="Save">
+							<a href="profileShelterViewer.php" class="btn btn-warning">Cancel</a>
+						</div>
+					</form>    
+			</div> 
+		<input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
+		<script>
+			grecaptcha.ready(function () {
+				grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
+					.then(function (token) {
+					var recaptchaResponse = document.getElementById('recaptchaResponse');
+					console.log(recaptchaResponse);
+					recaptchaResponse.value = token;
+				});
+			});
+		</script> 
+	</div
     </body>
 </html>

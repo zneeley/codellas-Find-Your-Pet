@@ -147,48 +147,60 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="layout.php">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
+	<style type="text/css">
+        body{
+            background-image: url(images/create_shelter.jpg);            
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+        }
+
+	</style>
 </head>
     <body>
-        <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile Creation.</label><br>
-        <form action="" method="POST" enctype="multipart/form-data">
-            <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
-                <label>Upload a Profile Picture:</label><br>
-                <input type="file" name="image" />
-                <br><span class="help-block"><?php echo $imgExt_err; ?></span>
-                <span class="help-block"><?php echo $imgSize_err; ?></span>
-            </div>
-            
-            <div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
-                <br><label>Your Bio:</label><br>
-                <textarea rows="4" cols="50" name="bio"></textarea><br>
-                <span class="help-block"><?php echo $bio_err; ?></span>
-            </div>
-            
-            <div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
-                <br><label>Shelter Address:</label><br>
-                <textarea rows="1" cols="50" name="address"></textarea><br>
-                <span class="help-block"><?php echo $address_err; ?></span>
-            </div>
-            
-            <div class="form-group <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
-                <br><label>Shelter Phone Number:</label><br>
-                <input type="tel" name="telphone" placeholder="888-888-8888" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
-                <span class="help-block"><?php echo $phone_err; ?></span>
-            </div>
-            <input type="submit" class="btn btn-primary" value="Submit">
-            <input type="reset" class="btn btn-default" value="Reset">
-            <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
-        </form>
-        <img src="images/profileTemplate.png" alt="USE THIS AS A GUIDE!!!!!!!">
-    <script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
-                .then(function (token) {
-                var recaptchaResponse = document.getElementById('recaptchaResponse');
-                console.log(recaptchaResponse);
-                recaptchaResponse.value = token;
-            });
-        });
-    </script> 
+		<div class="card m-5 text-center" style="width: 25rem">
+			<h1 class="card-header">Shelter Profile Creation</h1><br>
+			<form action="" method="POST" enctype="multipart/form-data">
+				<div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
+					<label>Upload a Profile Picture:</label><br>
+					<input type="file" name="image" />
+					<br><span class="help-block"><?php echo $imgExt_err; ?></span>
+					<span class="help-block"><?php echo $imgSize_err; ?></span>
+				</div>
+				
+				<div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
+					<br><label>Your Bio:</label><br>
+					<textarea rows="4" cols="50" name="bio"></textarea><br>
+					<span class="help-block"><?php echo $bio_err; ?></span>
+				</div>
+				
+				<div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
+					<br><label>Shelter Address:</label><br>
+					<textarea rows="1" cols="50" name="address"></textarea><br>
+					<span class="help-block"><?php echo $address_err; ?></span>
+				</div>
+				
+				<div class="form-group <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
+					<br><label>Shelter Phone Number:</label><br>
+					<input type="tel" name="telphone" placeholder="888-888-8888" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
+					<span class="help-block"><?php echo $phone_err; ?></span>
+				</div>
+				<div class="m-5">
+					<input type="submit" class="btn btn-primary" value="Submit">
+					<input type="reset" class="btn btn-default" value="Reset">
+					<input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
+				</div>
+			</form>
+		<script>
+			grecaptcha.ready(function () {
+				grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
+					.then(function (token) {
+					var recaptchaResponse = document.getElementById('recaptchaResponse');
+					console.log(recaptchaResponse);
+					recaptchaResponse.value = token;
+				});
+			});
+		</script> 
+		</div>
     </body>
 </html> 
