@@ -129,27 +129,40 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="layout.php">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
+
+    <style type="text/css">
+        body{
+            background-image: url(images/create.jpeg);            
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+        }
+
+	</style>
 </head>
     <body>
-        <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile Creation.</label><br>
+	<div class="card m-5 ">
+        <h1 class="text-center card-header">Create Your Profile!<br></h1>
         <form action="" method="POST" enctype="multipart/form-data">
-            <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
-                <label>Upload a Profile Picture:</label><br>
+            <div class="form-group m-5 <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
+                <h4>Choose a Profile Pic!</h4><br>
                 <input type="file" name="image" />
                 <br><span class="help-block"><?php echo $imgExt_err; ?></span>
                 <span class="help-block"><?php echo $imgSize_err; ?></span>
             </div>
             
-            <div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
-                <br><label>Your Bio:</label><br>
-                <textarea rows="4" cols="50" name="bio"></textarea><br>
+            <div class="m-5 form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
+                <br><h5>Create Your Bio!</h5><br>
+                <textarea class="form-control" rows="4" cols="50" name="bio"></textarea><br>
                 <span class="help-block"><?php echo $bio_err; ?></span>
             </div>
-            <input type="submit" class="btn btn-primary" value="Submit">
-            <input type="reset" class="btn btn-default" value="Reset">
-            <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
-        </form>
-        <img src="images/profileTemplate.png" alt="USE THIS AS A GUIDE!!!!!!!">
+			<div class="m-5">
+				<input type="submit" class="btn btn-primary" value="Submit">
+				<input type="reset" class="btn btn-default" value="Reset">
+				<input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
+			</div>
+		</form>
+	</div>
     <script>
         grecaptcha.ready(function () {
             grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
