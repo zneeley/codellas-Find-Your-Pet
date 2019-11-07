@@ -1,6 +1,7 @@
 <?php
 // Include config file
 require_once "config.php";
+
 // Code for reCaptcha
 // Set reCaptcha Variables
 $reCaptchaVal = "";

@@ -16,6 +16,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+// Stop  nonshelter account from accessing this page
+if($_SESSION["accountType"] != "shelter") {
+    header("location: profileEditor.php");
+}
+
 // Check the post and see if ask Google what value the user is getting from interacting with the site
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Build POST request:
@@ -114,8 +119,8 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
             $param_shelterID = $_SESSION['accountID'];
 
             if(mysqli_stmt_execute($stmt)){
-                // Redirect user to welcome page
-                header("location: welcome.php");
+                // Redirect user to profile page
+                header("location: profileShelterViewer.php");
             }
 
         }
@@ -177,13 +182,13 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
 					
 					<div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
 						<br><h5>Shelter Address:</h5><br>
-						<textarea rows="1" cols="50" name="address"></textarea><br>
+						<textarea rows="1" cols="50" name="address" placeholder="1234 Some Road, State, Zip"></textarea><br>
 						<span class="help-block"><?php echo $address_err; ?></span>
 					</div>
 
 					<div class="form-group <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
 						<br><h5>Shelter Phone Number:</h5><br>
-						<input type="tel" name="telphone" placeholder="888-888-8888" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
+						<input type="tel" name="telphone" placeholder="(888) 888-8888"><br>
 						<span class="help-block"><?php echo $phone_err; ?></span>
 						<div class="m-5">
 							<input type="submit" class="btn btn-success" value="Save">

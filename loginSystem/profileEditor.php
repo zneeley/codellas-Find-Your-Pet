@@ -15,6 +15,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+// Stop  nonshelter account from accessing this page
+if($_SESSION["accountType"] != "user") {
+    header("location: profileShelterEditor.php");
+}
+
 // Check the post and see if ask Google what value the user is getting from interacting with the site
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Build POST request:

@@ -16,6 +16,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+// Stop  nonshelter account from accessing this page
+if($_SESSION["accountType"] != "user") {
+    header("location: createProfileShelter.php");
+}
+
+
 // Code for reCaptcha
 // Set reCaptcha Variables
 $reCaptchaVal = "";
