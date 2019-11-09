@@ -177,9 +177,12 @@ mysqli_close($link);
 						<textarea rows="4" cols="50" name="bio"></textarea><br>
 						<span class="help-block"><?php echo $bio_err; ?></span>
 					</div>
+					<div class="mb-2">
+						<a href="passwordReset.php">Reset Your Password</a>
+					</div>
 					<input type="submit" class="btn btn-success" value="Save">
 					<a href="profileViewer.php" class="btn btn-warning">Cancel</a>
-				</form>    
+				</form>  
 			</div> 
 		<input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
 		<script>

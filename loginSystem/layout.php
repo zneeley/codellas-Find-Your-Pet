@@ -255,3 +255,16 @@ margin-left: 4px;
  .profile_text{
 	 text-align: justify;
  }
+ 
+ /*
+ * Navbar
+ */
+ .navbar_pic{
+   width: 75px;
+   height: 75;
+   margin-right: 10px;
+   margin-bottom: 10px;
+ }
+ .profile_text{
+	 text-align: justify;
+ }
