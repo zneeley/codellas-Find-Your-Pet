@@ -1,5 +1,4 @@
 <?php
-
 // Start Session
 session_start();
 
@@ -17,20 +16,23 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 if ($_SESSION['accountType'] === "user") {
     $profileType = 'profileViewer.php';
-	$editType = 'profileEditor.php';
+    $editType = 'profileEditor.php';
+    
+    // Prepare a select statement
+    $sql = "SELECT profileImage FROM users WHERE userID = ?";
     
 } else {
     $profileType = 'profileShelterViewer.php';
-	$editType = 'profileShelterEditor.php';
+    $editType = 'profileShelterEditor.php';
+    
+    // Prepare a select statement
+    $sql = "SELECT profileImage FROM shelters WHERE shelterID = ?";
 }
-
-// Prepare a select statement
-$sql = "SELECT profileImage FROM users WHERE userID = ?";
 
 if($stmt = mysqli_prepare($link, $sql)){
     // Bind variables to the prepared statement as parameters
     mysqli_stmt_bind_param($stmt, "s", $param_userID);
-
+    
     // Set parameters
     $param_userID = $_SESSION['accountID'];
     
