@@ -163,49 +163,51 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
 	</style>
 </head>
     <body>
-		<div class="card m-5 text-center" style="width: 25rem">
-			<h1 class="card-header">Shelter Profile Creation</h1><br>
-			<form action="" method="POST" enctype="multipart/form-data">
-				<div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
-					<label>Upload a Profile Picture:</label><br>
-					<input type="file" name="image" />
-					<br><span class="help-block"><?php echo $imgExt_err; ?></span>
-					<span class="help-block"><?php echo $imgSize_err; ?></span>
-				</div>
-				
-				<div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
-					<br><label>Your Bio:</label><br>
-					<textarea rows="4" cols="50" name="bio"></textarea><br>
-					<span class="help-block"><?php echo $bio_err; ?></span>
-				</div>
-				
-				<div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
-					<br><label>Shelter Address:</label><br>
-                                        <textarea rows="1" cols="50" name="address" placeholder="1234 Some Road, State, Zip"></textarea><br>
-					<span class="help-block"><?php echo $address_err; ?></span>
-				</div>
-				
-				<div class="form-group <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
-					<br><label>Shelter Phone Number:</label><br>
-					<input type="tel" name="telphone" placeholder="(888) 888-8888"><br>
-					<span class="help-block"><?php echo $phone_err; ?></span>
-				</div>
-				<div class="m-5">
-					<input type="submit" class="btn btn-primary" value="Submit">
-					<input type="reset" class="btn btn-default" value="Reset">
-					<input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
-				</div>
-			</form>
-		<script>
-			grecaptcha.ready(function () {
-				grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
-					.then(function (token) {
-					var recaptchaResponse = document.getElementById('recaptchaResponse');
-					console.log(recaptchaResponse);
-					recaptchaResponse.value = token;
-				});
-			});
-		</script> 
-		</div>
+	<div class="card m-5 text-center" style="width: 25rem">
+            <h1 class="card-header">Shelter Profile Creation</h1><br>
+            <form action="" method="POST" enctype="multipart/form-data">
+            <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
+                <label>Upload a Profile Picture:</label><br>
+                <input type="file" name="image" />
+                <br><span class="help-block"><?php echo $imgExt_err; ?></span>
+                <span class="help-block"><?php echo $imgSize_err; ?></span>
+            </div>
+
+            <div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
+                <br><label>Your Bio:</label><br>
+                <textarea rows="4" cols="50" name="bio"></textarea><br>
+                <span class="help-block"><?php echo $bio_err; ?></span>
+            </div>
+
+            <div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
+                <br><label>Shelter Address:</label><br>
+                <textarea rows="1" cols="50" name="address" placeholder="1234 Some Road, State, Zip"></textarea><br>
+                <span class="help-block"><?php echo $address_err; ?></span>
+            </div>
+
+            <div class="form-group <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
+                <br><label>Shelter Phone Number:</label><br>
+                <input type="tel" name="telphone" placeholder="(888) 888-8888"><br>
+                <span class="help-block"><?php echo $phone_err; ?></span>
+            </div>
+
+            <div class="m-5">
+                <input type="submit" class="btn btn-primary" value="Submit">
+                <input type="reset" class="btn btn-default" value="Reset">
+                <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
+            </div>
+            </form>
+
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'register' })
+                .then(function (token) {
+                var recaptchaResponse = document.getElementById('recaptchaResponse');
+                console.log(recaptchaResponse);
+                recaptchaResponse.value = token;
+            });
+        });
+    </script>
+    </div>
     </body>
 </html> 

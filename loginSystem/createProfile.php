@@ -162,12 +162,12 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
                 <textarea class="form-control" rows="4" cols="50" name="bio"></textarea><br>
                 <span class="help-block"><?php echo $bio_err; ?></span>
             </div>
-			<div class="m-5">
-				<input type="submit" class="btn btn-primary" value="Submit">
-				<input type="reset" class="btn btn-default" value="Reset">
-				<input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
-			</div>
-		</form>
+            <div class="m-5">
+                <input type="submit" class="btn btn-primary" value="Submit">
+                <input type="reset" class="btn btn-default" value="Reset">
+                <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>
+            </div>
+	</form>
 	</div>
     <script>
         grecaptcha.ready(function () {

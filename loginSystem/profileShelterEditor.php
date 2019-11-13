@@ -20,7 +20,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 if($_SESSION["accountType"] != "shelter") {
     header("location: profileEditor.php");
 }
-
+    
 // Check the post and see if ask Google what value the user is getting from interacting with the site
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Build POST request:
@@ -187,12 +187,15 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
 					</div>
 
 					<div class="form-group <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
-						<br><h5>Shelter Phone Number:</h5><br>
+                                                <br><h5>Shelter Phone Number:</h5><br>
 						<input type="tel" name="telphone" placeholder="(888) 888-8888"><br>
 						<span class="help-block"><?php echo $phone_err; ?></span>
 						<div class="m-5">
-							<input type="submit" class="btn btn-success" value="Save">
-							<a href="profileShelterViewer.php" class="btn btn-warning">Cancel</a>
+                                                <div class="mb-2">
+                                                    <a href="passwordReset.php">Reset Your Password</a>
+                                                </div>
+                                                    <input type="submit" class="btn btn-success" value="Save">
+                                                    <a href="profileShelterViewer.php" class="btn btn-warning">Cancel</a>
 						</div>
 					</form>    
 			</div> 
