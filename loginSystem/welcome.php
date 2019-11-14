@@ -111,6 +111,13 @@ mysqli_close($link);
 	</nav>
     <div class="page-header">
     </div>
+    
+    <div>
+        <b><label>Pets:</label></b><br>
+        <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5"><img width="50" height="50" src="uploadContent/petImages/UPID-5dccb42d6ae29.jpg" alt="Pet image"></a><br>
+        <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5">Pet name will go here</a>
+        
+    </div>
 	   <!-- include jquery, popper.js, and bootstrap js -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

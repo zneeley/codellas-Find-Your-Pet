@@ -229,8 +229,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <div class="form-group <?php echo (!empty($gender_err)) ? 'has-error' : ''; ?>">
                 <label>Is the pet a ...</label><br>
-                <input type="radio" name="gender" value="male" checked> Male<br>
-                <input type="radio" name="gender" value="female"> Female<br>
+                <input type="radio" name="gender" value="Male" checked> Male<br>
+                <input type="radio" name="gender" value="Female"> Female<br>
                 <span class="help-block"><?php echo $gender_err; ?></span>
             </div>
             
@@ -249,8 +249,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <div class="form-group <?php echo (!empty($neutered_err)) ? 'has-error' : ''; ?>">
                 <label>Are they neutered?</label><br>
-                <input type="radio" name="neutered" value="yes" checked>Yes<br>
-                <input type="radio" name="neutered" value="no">No<br>
+                <input type="radio" name="neutered" value="Yes" checked>Yes<br>
+                <input type="radio" name="neutered" value="No">No<br>
                 <span class="help-block"><?php echo $neutered_err; ?></span>
             </div>
             
