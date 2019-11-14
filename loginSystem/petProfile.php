@@ -73,11 +73,8 @@ if($stmt = mysqli_prepare($link, $sql)){
 mysqli_close($link);    
 }
 
-// If the pet belongs to the shelter show edit button.
-$profileID = base64_decode($_GET['id']);
-
 if ($shelterID === $_SESSION['accountID']) {
-    $editButton = "<a href=\"petProfileEditor.php?id=".$profileID."class\"=btn btn-warning\">Edit</a><br>";
+    $editButton = "<a href=\"petProfileEditor.php?id=".$_GET['id']."\" class\"=btn btn-warning\">Edit</a><br>";
 } else {
     $editButton = "";
 }

@@ -104,7 +104,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 // Store information into database and upload image
     if(isset($_FILES['image']) && isset($_POST['bio'])) {
         if (empty($bio_err) && empty($imgExt_err) && empty($imgSize_err)) {
-            // Prepare an insert statement
+            // Prepare an update statement
             $sql = "UPDATE users SET profileImage = ?, userBio = ? WHERE userID = ?";
 
             if($stmt = mysqli_prepare($link, $sql)){
@@ -161,40 +161,42 @@ mysqli_close($link);
 	</style>
 </head>
     <body class="d-flex justify-content-center">        
-		<div class="card m-5 text-center" style="height: 30rem; width: 25rem">
-			<div id="editer">
-				<h1 class="card-header">Edit Your Profile!</h1><br>
-				<form action="" method="POST" enctype="multipart/form-data">
-					<div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
-						<h5>Edit Your Picture!</h5><br>
-						<input type="file" name="image" />
-						<br><span class="help-block"><?php echo $imgExt_err; ?></span>
-						<span class="help-block"><?php echo $imgSize_err; ?></span>
-					</div>
-
-					<div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
-						<br><h5>Edit Your Bio!</h5><br>
-						<textarea rows="4" cols="50" name="bio"></textarea><br>
-						<span class="help-block"><?php echo $bio_err; ?></span>
-					</div>
-					<div class="mb-2">
-						<a href="passwordReset.php">Reset Your Password</a>
-					</div>
-					<input type="submit" class="btn btn-success" value="Save">
-					<a href="profileViewer.php" class="btn btn-warning">Cancel</a>
-				</form>  
-			</div> 
-		<input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
-		<script>
-			grecaptcha.ready(function () {
-				grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
-					.then(function (token) {
-					var recaptchaResponse = document.getElementById('recaptchaResponse');
-					console.log(recaptchaResponse);
-					recaptchaResponse.value = token;
-				});
-			});
-		</script> 
+	<div class="card m-5 text-center" style="height: 30rem; width: 25rem">
+            <div id="editer">
+		<h1 class="card-header">Edit Your Profile!</h1><br>
+		<form action="" method="POST" enctype="multipart/form-data">
+		<div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
+                    <h5>Edit Your Picture!</h5><br>
+            	    <input type="file" name="image" />
+                    <br><span class="help-block"><?php echo $imgExt_err; ?></span>
+                    <span class="help-block"><?php echo $imgSize_err; ?></span>
 		</div>
+
+		<div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
+                    <br><h5>Edit Your Bio!</h5><br>
+                    <textarea rows="4" cols="50" name="bio"></textarea><br>
+                    <span class="help-block"><?php echo $bio_err; ?></span>
+		</div>
+                
+                <div class="mb-2">
+                    <a href="passwordReset.php">Reset Your Password</a>
+		</div>
+		
+                <input type="submit" class="btn btn-success" value="Save">
+		<a href="profileViewer.php" class="btn btn-warning">Cancel</a>
+		</form>  
+            </div> 
+	<input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
+	<script>
+            grecaptcha.ready(function () {
+            grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
+            .then(function (token) {
+            var recaptchaResponse = document.getElementById('recaptchaResponse');
+            console.log(recaptchaResponse);
+            recaptchaResponse.value = token;
+            });
+	});
+        </script> 
+	</div>
     </body>
 </html>
