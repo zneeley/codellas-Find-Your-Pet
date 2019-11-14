@@ -4,7 +4,7 @@
 require_once "config.php";
 
 // init variables
-$fileDir = $fileNameNew = $accountBio = $petID = $shelterID = $petType = $gender = $neutered = $vaccinationRecords = $petName = $petAge = $shelterID = $breed = "";
+$fileDir = $fileNameNew = $accountBio = $petID = $shelterID = $petType = $gender = $neutered = $vaccinationRecords = $petName = $petAge = $breed = "";
 $imgExt_err = $imgSize_err = $bio_err = $gender_err = $petType_err = $petName_err = $neutered_err = $petAge_err = $breed_err = "";
 
 // Start Session
@@ -44,6 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Get and process the information sent from the form
 if($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    // Generate petID
+    $petID = uniqid("UPID-");
     
     // Check to see if pet type is empty
     if(isset($_POST['petType'])){
@@ -132,7 +135,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // If file passes checks push 
-        $fileNameNew = $_SESSION['accountID'].".".$fileExt;
+        $fileNameNew = $petID.".".$fileExt;
         $fileDir = "uploadContent/petImages/".$fileNameNew;
         move_uploaded_file($fileTmp,"uploadContent/petImages/".$fileNameNew);
     }
@@ -160,7 +163,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     $param_vaccinationRecords, $param_petImage, $param_bio);
             
             // Set parameters
-            $param_petID = uniqid("UPID-");
+            $param_petID = $petID;
             $param_shelterID = $_SESSION["accountID"];
             $param_petType = $petType;
             $param_petName = $petName;
