@@ -52,9 +52,7 @@ if($stmt = mysqli_prepare($link, $sql)){
     }
     // Close statement
     mysqli_stmt_close($stmt);
-    
-// Close connection
-mysqli_close($link);    
+  
 }
 
 // Stop none shelter and shelter accounts the pet doesnt belong to from accessing this page

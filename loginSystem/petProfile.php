@@ -52,8 +52,6 @@ if($stmt = mysqli_prepare($link, $sql)){
     // Close statement
     mysqli_stmt_close($stmt);
     
-// Close connection
-mysqli_close($link);    
 }
 
 // Check the post and see if ask Google what value the user is getting from interacting with the site
@@ -78,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Prepare a select statement
-$sql = "SELECT shelterID, petType, petName, breed, gender, age, neutered, vaccinationRecords, petImage, bio FROM pets WHERE petID= ?";
+$sql = "SELECT shelterID, petType, petName, breed, gender, age, neutered, vaccinationRecords, petImage, bio FROM pets WHERE petID = ?";
 
 if($stmt = mysqli_prepare($link, $sql)){
     // Bind variables to the prepared statement as parameters
