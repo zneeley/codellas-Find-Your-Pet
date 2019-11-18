@@ -6,6 +6,7 @@ require_once "config.php";
 // init variables
 $fileDir = $fileNameNew = $accountBio = $petID = $shelterID = $petType = $gender = $neutered = $vaccinationRecords = $petName = $petAge = $breed = $shelterIDCheck = $petID_encoded = "";
 $imgExt_err = $imgSize_err = $bio_err = $gender_err = $petType_err = $petName_err = $neutered_err = $petAge_err = $breed_err = "";
+$profileType =  $editType = $profileImgDir = "";
 
 // Start Session
 session_start();
@@ -14,6 +15,46 @@ session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
+}
+
+// set navbar variables
+if ($_SESSION['accountType'] === "user") {
+    $profileType = 'profileViewer.php';
+    $editType = 'profileEditor.php';
+    
+    // Prepare a select statement
+    $sql = "SELECT profileImage FROM users WHERE userID = ?";
+    
+} else {
+    $profileType = 'profileShelterViewer.php';
+    $editType = 'profileShelterEditor.php';
+    
+    // Prepare a select statement
+    $sql = "SELECT profileImage FROM shelters WHERE shelterID = ?";
+}
+
+if($stmt = mysqli_prepare($link, $sql)){
+    // Bind variables to the prepared statement as parameters
+    mysqli_stmt_bind_param($stmt, "s", $param_userID);
+    
+    // Set parameters
+    $param_userID = $_SESSION['accountID'];
+    
+    // Attempt to execute the prepared statement
+    if(mysqli_stmt_execute($stmt)){
+        // Store result
+        mysqli_stmt_store_result($stmt);
+        
+        mysqli_stmt_bind_result($stmt, $param_userImage);
+        if(mysqli_stmt_fetch($stmt)){
+            $profileImgDir = base64_decode($param_userImage);
+        }
+    }
+    // Close statement
+    mysqli_stmt_close($stmt);
+    
+// Close connection
+mysqli_close($link);    
 }
 
 // Stop none shelter and shelter accounts the pet doesnt belong to from accessing this page
@@ -234,6 +275,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <img class="navbar_pic" src="images/pawprint.jpg" alt="Your image">
+          <a class="navbar-brand" href="#">F.Y.P</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-toggle" aria-controls="navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbar-toggle">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" href="welcome.php">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Find Pets!</a>
+              </li>
+            </ul>
+            
+            <ul class="navbar-nav mt-2 mt-lg-0">
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <?php echo $_SESSION["username"] ?>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="<?php echo $profileType; ?>">View Profile</a>
+                  <a class="dropdown-item" href="<?php echo $editType; ?>">Edit Profile</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="logout.php">Logout</a>
+                </div>
+              </li>
+            </ul>
+              <img class="profile_pic" src="<?php echo $profileImgDir ?>" alt="Your image">
+          </div>
+        </nav>
         <form action="" method="POST" enctype="multipart/form-data">
             <div class="form-group <?php echo (!empty($petType_err)) ? 'has-error' : ''; ?>">
                 <Label>TEMP VALUE add accepted types of pets used to other values also. Maybe use a dropdown box</Label><br>
@@ -309,5 +383,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             });
         });
     </script> 
+    <!-- include jquery, popper.js, and bootstrap js -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     </body>
 </html>

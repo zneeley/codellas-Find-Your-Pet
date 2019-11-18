@@ -6,6 +6,7 @@ require_once "config.php";
 // init variables
 $fileDir = $fileNameNew = $accountBio = $petID = $shelterID = $petType = $gender = $neutered = $vaccinationRecords = $petName = $petAge = $shelterID = $breed = "";
 $imgExt_err = $imgSize_err = $bio_err = $gender_err = $petType_err = $petName_err = $neutered_err = $petAge_err = $breed_err = "";
+$profileType =  $editType = $profileImgDir = "";
 
 // Start Session
 session_start();
@@ -17,8 +18,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
-//NAVBAR//
-$profileType =  $editType = $profileImgDir = "";
+// set navbar variables
 if ($_SESSION['accountType'] === "user") {
     $profileType = 'profileViewer.php';
     $editType = 'profileEditor.php';
@@ -34,9 +34,29 @@ if ($_SESSION['accountType'] === "user") {
     $sql = "SELECT profileImage FROM shelters WHERE shelterID = ?";
 }
 
+if($stmt = mysqli_prepare($link, $sql)){
+    // Bind variables to the prepared statement as parameters
+    mysqli_stmt_bind_param($stmt, "s", $param_userID);
+    
+    // Set parameters
+    $param_userID = $_SESSION['accountID'];
+    
+    // Attempt to execute the prepared statement
+    if(mysqli_stmt_execute($stmt)){
+        // Store result
+        mysqli_stmt_store_result($stmt);
+        
+        mysqli_stmt_bind_result($stmt, $param_userImage);
+        if(mysqli_stmt_fetch($stmt)){
+            $profileImgDir = base64_decode($param_userImage);
+        }
+    }
+    // Close statement
+    mysqli_stmt_close($stmt);   
+}
+
 
 // Stop  nonshelter account from accessing this page
-
 if($_SESSION["accountType"] != "shelter") {
     header("location: welcome.php");
 }
@@ -239,7 +259,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 		  <div class="collapse navbar-collapse" id="navbar-toggle">
 			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			  <li class="nav-item active">
-				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+				<a class="nav-link" href="welcome.php">Home <span class="sr-only">(current)</span></a>
 			  </li>
 			  <li class="nav-item">
 				<a class="nav-link" href="#">Find Pets!</a>

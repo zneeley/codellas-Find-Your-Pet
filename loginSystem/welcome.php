@@ -14,6 +14,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+// set navbar variables
 if ($_SESSION['accountType'] === "user") {
     $profileType = 'profileViewer.php';
     $editType = 'profileEditor.php';
@@ -85,7 +86,7 @@ mysqli_close($link);
 	  <div class="collapse navbar-collapse" id="navbar-toggle">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 		  <li class="nav-item active">
-			<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+			<a class="nav-link" href="welcome.php">Home <span class="sr-only">(current)</span></a>
 		  </li>
 		  <li class="nav-item">
 			<a class="nav-link" href="#">Find Pets!</a>
@@ -106,7 +107,6 @@ mysqli_close($link);
 		  </li>
 	    </ul>
 		  <img class="profile_pic" src="<?php echo $profileImgDir ?>" alt="Your image">
-
 	  </div>
 	</nav>
     <div class="page-header">
