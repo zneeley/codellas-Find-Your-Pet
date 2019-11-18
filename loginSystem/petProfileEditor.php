@@ -246,12 +246,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             if(mysqli_stmt_execute($stmt)){
                 // Redirect user to welcome page
                 header("location: petProfile.php?id=".base64_encode($petID));
-            } else{
+            } else {
                 echo "Something went wrong. Please try again later.";
             }
-         }
-
+            
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+        
+    // Close connection
+    mysqli_close($link);
+    
     }
+     
 }
 
 ?>
