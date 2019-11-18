@@ -340,11 +340,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="checkbox" class="vac" id="vac1-dog" value="vac1"><br>
                         <label for="vac2-dog">Vaccine B</label>
                         <input type="checkbox" class="vac" id="vac2-dog"value="vac2"><br>
-                        <label for="vac3-dog">Vaccine C</label>
-                        <input type="checkbox" class="vac" id="vac3-dog" value="vac3"><br>
-                        <label for="vac4-dog">Vaccine D</label>
-                        <input type="checkbox" class="vac" id="vac4-dog" value="vac4"><br><br>
-                        <input type="hidden" class="vac-list" name="vac-list" val="">
+                        <input type="hidden" class="vac-list" name="vac-list" val=""><br>
                     </div>
                     
                     <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">

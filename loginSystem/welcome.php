@@ -114,8 +114,8 @@ mysqli_close($link);
     
     <div>
         <b><label>Pets:</label></b><br>
-        <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5"><img width="50" height="50" src="uploadContent/petImages/UPID-5dccb42d6ae29.jpg" alt="Pet image"></a><br>
-        <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5">Pet name will go here</a>
+        <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5"><img width="150" height="150" src="uploadContent/petImages/UPID-5dccb42d6ae29.jpg" alt="Pet image"></a><br>
+        <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5">Gizmo's Profile</a>
         
     </div>
 	   <!-- include jquery, popper.js, and bootstrap js -->

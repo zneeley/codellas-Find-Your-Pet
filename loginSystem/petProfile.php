@@ -113,7 +113,7 @@ mysqli_close($link);
 }
 
 if ($shelterID === $_SESSION['accountID']) {
-    $editButton = "<a href=\"petProfileEditor.php?id=".$_GET['id']."\" class\"=btn btn-warning\">Edit</a><br>";
+    $editButton = "<a href=\"petProfileEditor.php?id=".$_GET['id']."\" class=\"btn btn-warning\">Edit</a><br>";
 } else {
     $editButton = "";
 }
@@ -191,11 +191,12 @@ if ($shelterID === $_SESSION['accountID']) {
                     <p class="profile_text"><?php echo $petAge; ?></p><br>
                     <label>Neutered: </label>
                     <p class="profile_text"><?php echo $neutered; ?></p><br>
-                    <label>Vaccination Records: ADD PROPER INFORMATION WHEN ITS DONE BY JOSH</label>
+                    <label>Vaccination Records: ADD PROPER INFORMATION WHEN INFO IS ADDED</label>
                     <p class="profile_text"><?php echo $vaccinationRecords; ?></p><br>
                     
                 </div>
 		<div class="card-footer">
+                    <a href="welcome.php" class="btn btn-primary">Home</a>
 		    <?php echo $editButton; ?><br>
 		</div>
             </div>

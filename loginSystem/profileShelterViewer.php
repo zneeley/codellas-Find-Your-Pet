@@ -175,10 +175,16 @@ mysqli_close($link);
                     <p class="profile_text"><?php echo $profileAddress; ?></p><br>
                     <label>Shelter Phone Number: </label>
                     <p class="profile_text"><?php echo $profilePhone; ?></p><br>
+                    
+                    <br>
+                    <b><label>Pets:</label></b><br>
+                    <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5"><img width="150" height="150" src="uploadContent/petImages/UPID-5dccb42d6ae29.jpg" alt="Pet image"></a><br>
+                    <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5">Gizmo's Profile</a>
                 </div>
 		<div class="card-footer">
 		    <a href="welcome.php" class="btn btn-primary">Home</a>
-                    <a href="profileShelterEditor.php" class="btn btn-warning">Edit</a><br>
+                    <a href="profileShelterEditor.php" class="btn btn-warning">Edit</a>
+                    <a href="createProfilePet.php" class="btn btn-success">Add a Pet</a><br>
 		</div>
             </div>
         </div>
