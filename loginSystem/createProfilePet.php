@@ -146,7 +146,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Get Vaccination Records
-    $vaccinationRecords = "REPLACE WITH REAL VALUE"; //$_POST['vacRecords'];
+    $vaccinationRecords = $_POST['vac-list'];
     
     // Upload image system 
     if(isset($_FILES['image'])){
@@ -286,8 +286,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h4 class="">Please select a type of pet</h4>
                 <select class="form-control " name="pet" id="pet-select">
                     <option value="" selected disabled>Select a Pet!</option>
-                    <option value="dog">Dog</option>
-                    <option value="cat">Cat</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>
                 </select>
             </div>
             
@@ -303,9 +303,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group <?php echo (!empty($gender_err)) ? 'has-error' : ''; ?>">
                         <h5>Is the pet a ...</h5>
                         <label for="male-dog">Male</label>
-                        <input type="radio" name="gender" id="male-dog" value="male" checked><br>
+                        <input type="radio" name="gender" id="male-dog" value="Male" checked><br>
                         <label for="female-dog">Female</label>
-                        <input type="radio" name="gender" id="female-dog" value="female"><br>
+                        <input type="radio" name="gender" id="female-dog" value="Female"><br>
                         <span class="help-block"><?php echo $gender_err; ?></span>
                     </div>
                     <div class="form-group <?php echo (!empty($petAge_err)) ? 'has-error' : ''; ?>">
@@ -329,9 +329,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group <?php echo (!empty($neutered_err)) ? 'has-error' : ''; ?>">
                         <h5>Are they neutered?</h5>
                         <label for="nutered-dog-y">Yes</label>
-                        <input type="radio" name="neutered" id="nutered-dog-y" value="yes" checked><br>
+                        <input type="radio" name="neutered" id="nutered-dog-y" value="Yes" checked><br>
                         <label for="nutered-dog-n">No</label>
-                        <input type="radio" name="neutered" id="nutered-dog-n" value="no"><br>
+                        <input type="radio" name="neutered" id="nutered-dog-n" value="No"><br>
                         <span class="help-block"><?php echo $neutered_err; ?></span>
                     </div>
                     <div>
@@ -373,9 +373,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group <?php echo (!empty($gender_err)) ? 'has-error' : ''; ?>">
                         <h5>Is the pet a ...</h5>
                         <label for="male-cat">Male</label>
-                        <input type="radio" name="gender" id="male-cat" value="male" checked><br>
+                        <input type="radio" name="gender" id="male-cat" value="Male" checked><br>
                         <label for="female-cat">Female</label>
-                        <input type="radio" name="gender" id="female-cat" value="female"><br>
+                        <input type="radio" name="gender" id="female-cat" value="Female"><br>
                         <span class="help-block"><?php echo $gender_err; ?></span>
                     </div>
                     <div class="form-group <?php echo (!empty($petAge_err)) ? 'has-error' : ''; ?>">
@@ -399,9 +399,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group <?php echo (!empty($neutered_err)) ? 'has-error' : ''; ?>">
                         <h5>Are they neutered?</h5>
                         <label for="nutered-cat-y">Yes</label>
-                        <input type="radio" name="neutered" id="nutered-cat-y" value="yes" checked><br>
+                        <input type="radio" name="neutered" id="nutered-cat-y" value="Yes" checked><br>
                         <label for="nutered-cat-n">No</label>
-                        <input type="radio" name="neutered" id="nutered-cat-n" value="no"><br>
+                        <input type="radio" name="neutered" id="nutered-cat-n" value="No"><br>
                         <span class="help-block"><?php echo $neutered_err; ?></span>
                     </div>
                     <div>
