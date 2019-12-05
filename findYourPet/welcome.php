@@ -48,9 +48,11 @@ if($stmt = mysqli_prepare($link, $sql)){
         }
     }
     // Close statement
-    mysqli_stmt_close($stmt);
-    
-// Close connection
+    mysqli_stmt_close($stmt);  
+
+$sql="SELECT * FROM pets";
+$pets =  mysqli_query($link,$sql);
+var_dump($pets->fetch_all());
 mysqli_close($link);    
 }
 
@@ -114,8 +116,10 @@ mysqli_close($link);
     
     <div>
         <b><label>Pets:</label></b><br>
+        <?php foreach($pets as $pet){?>
         <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5"><img width="150" height="150" src="uploadContent/petImages/UPID-5dccb42d6ae29.jpg" alt="Pet image"></a><br>
         <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5">Gizmo's Profile</a>
+        <?php } ?>
         
     </div>
 	   <!-- include jquery, popper.js, and bootstrap js -->
