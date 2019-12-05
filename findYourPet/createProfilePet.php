@@ -525,6 +525,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             <option value="Minskin">Minskin</option>
                             <option value="LaPerm">LaPerm</option>
                             <option value="Oriental Longhair">Cornish Rex</option>
+                            <option value="Oriental Longhair">Tabby</option>
                         </select><br>
                     </div>
                     <div class="form-group <?php echo (!empty($neutered_err)) ? 'has-error' : ''; ?>">
