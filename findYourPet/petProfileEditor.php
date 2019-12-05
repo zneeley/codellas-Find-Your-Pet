@@ -5,7 +5,7 @@ require_once "config.php";
 
 // init variables
 $fileDir = $fileNameNew = $accountBio = $petID = $shelterID = $petType = $gender = $neutered = $vaccinationRecords = $petName = $petAge = $breed = $shelterIDCheck = $petID_encoded = "";
-$imgExt_err = $imgSize_err = $bio_err = $gender_err = $petType_err = $petName_err = $neutered_err = $petAge_err = $breed_err = "";
+$imgExt_err = $imgSize_err = $bio_err = $gender_err = $petName_err = $neutered_err = $petAge_err = $breed_err = "";
 $profileType =  $editType = $profileImgDir = "";
 
 // Start Session
@@ -111,18 +111,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Encoded the petID
 $petID_encoded = $_GET['id'];
 
-// Edit mode
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    // Check to see if pet type is empty
-    if(isset($_POST['petType'])){
-       // Check to see if the bio is empty
-        if (!strlen(trim($_POST['petType']))){
-            $petType_err = "Please click on the pet type.";
-        } else {
-            $petType = $_POST['petType'];
+// Get the type of pet being edited and use to display correct information
+// Prepare sql statement
+$sql = "SELECT petType FROM pets WHERE petID = ?";
+
+if($stmt = mysqli_prepare($link, $sql)){
+    // Bind variables to the prepared statement as parameters
+    mysqli_stmt_bind_param($stmt, "s", $param_petID);
+        
+    // Set parameters
+    $param_petID = base64_decode($_GET['id']);
+        
+    // Attempt to execute the prepared statement
+    if(mysqli_stmt_execute($stmt)){
+        // Store result
+        mysqli_stmt_store_result($stmt);
+
+        mysqli_stmt_bind_result($stmt, $param_petType);
+            if(mysqli_stmt_fetch($stmt)){
+                $petType = $param_petType;
+
         }
     }
+}
+
+// Edit mode
+if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check to see if pet gender is empty
     if(isset($_POST['gender'])){
@@ -217,20 +231,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Check input errors before inserting in database
-    if(empty($bio_err) && empty($breed_err) && empty($gender_err) && empty($petAge_err) && empty($petType_err) && empty($imgSize_err) && empty($imgExt_err) && empty($neutered_err) 
+    if(empty($bio_err) && empty($breed_err) && empty($gender_err) && empty($petAge_err) && empty($imgSize_err) && empty($imgExt_err) && empty($neutered_err) 
             && empty($petName_err) && $reCaptchaVal == "human"){
         
         // Prepare an update statement
-        $sql = "UPDATE pets SET petType = ?, petName = ?, breed = ?, gender = ?, age = ?, neutered = ?, vaccinationRecords = ?, petImage = ?, bio = ? WHERE petID = ?";
+        $sql = "UPDATE pets SET petName = ?, breed = ?, gender = ?, age = ?, neutered = ?, vaccinationRecords = ?, petImage = ?, bio = ? WHERE petID = ?";
         
          if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssssssssss", $param_petType, $param_petName, $param_breed, $param_gender, $param_age, $param_neutered, 
+            mysqli_stmt_bind_param($stmt, "sssssssss", $param_petName, $param_breed, $param_gender, $param_age, $param_neutered, 
                     $param_vaccinationRecords, $param_petImage, $param_bio, $param_petID);
             
             // Set parameters
             $param_petID = base64_decode($_GET['id']);
-            $param_petType = $petType;
             $param_petName = $petName;
             $param_breed = $breed;
             $param_gender = $gender;
