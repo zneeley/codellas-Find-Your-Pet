@@ -3,5 +3,5 @@
 Thumbs.db
 
 #Ignore unneeded folders
-loginSystem/nbproject/
-loginSystem/xampp/
+findYourPet/nbproject/
+findYourPet/xampp/

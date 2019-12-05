@@ -6,7 +6,7 @@ require_once "config.php";
 // init variables
 $fileDir = $fileNameNew = $accountBio = $petID = $shelterID = $petType = $gender = $neutered = $vaccinationRecords = $petName = $petAge = $shelterID = $breed = "";
 $imgExt_err = $imgSize_err = $bio_err = $gender_err = $petType_err = $petName_err = $neutered_err = $petAge_err = $breed_err = "";
-$profileType =  $editType = $profileImgDir = "";
+$profileType =  $editType = $profileImgDir = $reCaptchaVal = "";
 
 // Start Session
 session_start();
