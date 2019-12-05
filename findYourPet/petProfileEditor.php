@@ -5,8 +5,8 @@ require_once "config.php";
 
 // init variables
 $fileDir = $fileNameNew = $accountBio = $petID = $shelterID = $petType = $gender = $neutered = $vaccinationRecords = $petName = $petAge = $breed = $shelterIDCheck = $petID_encoded = "";
-$imgExt_err = $imgSize_err = $bio_err = $gender_err = $petName_err = $neutered_err = $petAge_err = $breed_err = "";
-$profileType =  $editType = $profileImgDir = "";
+$imgExt_err = $imgSize_err = $bio_err = $petName_err = $breed_err = $neutered_err = $gender_err = "";
+$profileType =  $editType = $profileImgDir = $reCaptchaVal = "";
 
 // Start Session
 session_start();
@@ -137,30 +137,10 @@ if($stmt = mysqli_prepare($link, $sql)){
 
 // Edit mode
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // Check to see if pet gender is empty
-    if(isset($_POST['gender'])){
-       // Check to see if the gender is empty
-        if (!strlen(trim($_POST['gender']))){
-            $gender_err = "Please the pets gender.";
-        } else {
-            $gender = $_POST['gender'];
-        }
-    }
     
-    // Check to see if pet breed is empty
-    if(isset($_POST['breed'])){
-       // Check to see if the breed is empty
-        if (!strlen(trim($_POST['breed']))){
-            $breed_err = "Please type a the breed.";
-        } else {
-            $breed = $_POST['breed'];
-        }
-    }
-    
-    // Check to see if pet breed is empty
+    // Check to see if pet name is empty 
     if(isset($_POST['petName'])){
-       // Check to see if the breed is empty
+       // Check to see if the name is empty
         if (!strlen(trim($_POST['petName']))){
             $petName_err = "Please type a name.";
         } else {
@@ -168,28 +148,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     
-    // Check to see if pet age is empty
-    if(isset($_POST['age'])){
-       // Check to see if the age is empty
-        if (!strlen(trim($_POST['age']))){
-            $petAge_err = "Please select an age.";
-        } else {
-            $petAge = $_POST['age'];
-        }
-    }
+    // Get the pets gender
+    $gender = $_POST['gender'];
     
-    // Check to see if pet neutered is empty
-    if(isset($_POST['neutered'])){
-       // Check to see if the neutered is empty
-        if (!strlen(trim($_POST['neutered']))){
-            $neutered_err = "Please select if the pet is neutered.";
-        } else {
-            $neutered = $_POST['neutered'];
-        }
-    }
+    // Get the pets age
+    $petAge = $_POST['age'];
+    
+    // Get the pets breed
+    $breed = $_POST['breed'];
+    
+    // Get the neutured value
+    $neutered = $_POST['neutered'];
     
     // Get Vaccination Records
-    $vaccinationRecords = "REPLACE WITH REAL VALUE"; //$_POST['vacRecords'];
+    $vaccinationRecords = $_POST['vac-list'];
+    
+    // Get UPID
+    $petID = base64_decode($_GET['id']);
     
     // Upload image system 
     if(isset($_FILES['image'])){
@@ -231,45 +206,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Check input errors before inserting in database
-    if(empty($bio_err) && empty($breed_err) && empty($gender_err) && empty($petAge_err) && empty($imgSize_err) && empty($imgExt_err) && empty($neutered_err) 
-            && empty($petName_err) && $reCaptchaVal == "human"){
-        
-        // Prepare an update statement
-        $sql = "UPDATE pets SET petName = ?, breed = ?, gender = ?, age = ?, neutered = ?, vaccinationRecords = ?, petImage = ?, bio = ? WHERE petID = ?";
-        
-         if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssssssss", $param_petName, $param_breed, $param_gender, $param_age, $param_neutered, 
-                    $param_vaccinationRecords, $param_petImage, $param_bio, $param_petID);
+    if(isset($_FILES['image']) && isset($_POST['bio'])) {
+        if (empty($bio_err) && empty($imgSize_err) && empty($imgExt_err) && empty($petName) && $reCaptchaVal == "human") {
             
-            // Set parameters
-            $param_petID = base64_decode($_GET['id']);
-            $param_petName = $petName;
-            $param_breed = $breed;
-            $param_gender = $gender;
-            $param_age = $petAge;
-            $param_neutered = $neutered;
-            $param_vaccinationRecords = $vaccinationRecords;
-            $param_petImage = base64_encode($fileDir);
-            $param_bio = $accountBio;
+            // Prepare the sql statement
+            $sql = "UPDATE pets SET petName = ?, breed = ?, gender = ?, age = ?, neutered = ?, vaccinationRecords = ?, petImage = ?, bio = ? WHERE petID = ?";
             
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Redirect user to welcome page
-                header("location: petProfile.php?id=".base64_encode($petID));
-            } else {
-                echo "Something went wrong. Please try again later.";
+            if($stmt = mysqli_prepare($link, $sql)){
+                // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "sssssssss", $param_petName, $param_breed, $param_gender, $param_age, $param_neutered, $param_vaccinationRecords, $param_petImage, $param_bio, $param_petID);
+                
+                // Set Parameters
+                $param_petName = $petName;
+                $param_breed = $breed;
+                $param_gender = $gender;
+                $param_age = $petAge;
+                $param_neutered = $neutered;
+                $param_vaccinationRecords = $vaccinationRecords;
+                $param_petImage = base64_encode($fileDir);
+                $param_bio = $accountBio;
+                $param_petID = base64_decode($_GET['id']);
+                
+                // Attempt to execute the prepared statement
+                if(mysqli_stmt_execute($stmt)){
+                    // Redirect user to welcome page
+                    header("location: petProfile.php?id=".base64_encode($petID));
+                } else {
+                    echo "Something went wrong. Please try again later.";
+                }
+                
+                // Close statement
+                mysqli_stmt_close($stmt);
             }
-            
-            // Close statement
-            mysqli_stmt_close($stmt);
         }
         
-    // Close connection
-    mysqli_close($link);
-    
+        // Close connection
+        mysqli_close($link);
     }
-     
+    
 }
 
 ?>
