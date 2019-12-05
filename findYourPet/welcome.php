@@ -116,9 +116,17 @@ mysqli_close($link);
     
     <div>
         <b><label>Pets:</label></b><br>
+        <div class ="row justify-content-center">
         <?php foreach($pets as $pet){?>
-        <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5"><img width="150" height="150" src="uploadContent/petImages/UPID-5dccb42d6ae29.jpg" alt="Pet image"></a><br>
-        <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5">Gizmo's Profile</a>
+        <div class="card col-sm-3" style="width: 18rem;">
+        <img src="<?php echo base64_decode($pet["petImage"]); ?>" class="card-img-top" alt="Pet image">
+        <div class="card-body">
+          <h5 class="card-title"><?php echo($pet["petName"]) ?></h5>
+          <p class="card-text"><?php echo($pet["breed"]) ?></p>
+          <p class="card-text"><?php echo($pet["gender"]) ?></p>
+          <a href="/petProfile.php?id=<?php echo base64_encode($pet["petID"]) ?>" class="btn btn-primary">View Profile</a>
+        </div>
+      </div>
         <?php } ?>
         
     </div>

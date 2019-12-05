@@ -326,15 +326,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 			  <img class="profile_pic" src="<?php echo $profileImgDir ?>" alt="Your image">
 		  </div>
 		</nav>
-            <div class="form-group m-4 <?php echo (!empty($petType_err)) ? 'has-error' : ''; ?>">
-                <h4 class="">Please select a type of pet</h4>
-                <select class="form-control " name="pet" id="pet-select">
-                    <option value="" selected disabled>Select a Pet!</option>
-                    <option value="dog" checked>Dog</option>
-                    <option value="cat">Cat</option>
-                </select>
-            </div>
-            
             <div id="dog" class="d-none m-4 pet-form">
                 <form action="" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="petType" value="dog">
@@ -631,10 +622,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     </body>
 </html>
 <script>
-    $("#pet-select").change(function(){
-        $(".pet-form").addClass("d-none");
-        $('#'+($(this).val())).removeClass("d-none");
-    });
+    
+    $(document).ready(function(){
+      $(".pet-form").each(function(){
+        if('<?php echo $petType ?>' == $(this).attr("id")){
+          $(this).removeClass("d-none");
+        }
+      });
+    })
     $("form").submit(function(){
         var vacs = "";
         $(this).find(".vac").each(function(){
