@@ -148,6 +148,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get Vaccination Records
     $vaccinationRecords = $_POST['vac-list'];
     
+    // Create UPID
+    $petID = uniqid("UPID-");
+    
     // Upload image system 
     if(isset($_FILES['image'])){
         // Get images data
@@ -172,7 +175,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // If file passes checks push 
-        $fileNameNew = $_SESSION['accountID'].".".$fileExt;
+        $fileNameNew = $petID.".".$fileExt;
         $fileDir = "uploadContent/petImages/".$fileNameNew;
         move_uploaded_file($fileTmp,"uploadContent/petImages/".$fileNameNew);
     }
@@ -200,7 +203,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     $param_vaccinationRecords, $param_petImage, $param_bio);
             
             // Set parameters
-            $param_petID = uniqid("UPID-");
+            $param_petID = $petID;
             $param_shelterID = $_SESSION["accountID"];
             $param_petType = $petType;
             $param_petName = $petName;
