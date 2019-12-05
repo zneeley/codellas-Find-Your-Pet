@@ -178,7 +178,8 @@ mysqli_close($link);
 <head>
     <meta charset="UTF-8">
     <title>Your Profile</title>
-    
+     
+   
 <!-- include bootstrap --> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
@@ -195,7 +196,16 @@ mysqli_close($link);
             background-size: cover;
             background-repeat: no-repeat;
             height: 100%;
+            font: 14px sans-serif;
         }
+        h3{ font: sans-serif; }
+        .container{
+            height: 100%;
+            align-content: center;
+            margin-left: 10px;
+           
+        }
+
 	</style>
 </head>
     <body class=""> 
@@ -232,29 +242,37 @@ mysqli_close($link);
               <img class="profile_pic" src="<?php echo $profileImgDir ?>" alt="Your image">
           </div>
         </nav>    
-        <div class="d-flex justify-content-center card m-5 text-center" style="height: 30rem; width: 25rem">
-                <div id="editer">
-            <h1 class="card-header">Edit Your Profile!</h1><br>
+         <div class="container">
+	       <div class="d-flex h-100">
+            <div class="card m-5" style="height: 30rem; width: 25rem">
+		<div class="card-header">
+                    <h2>Edit Your Profile</h2>
+                    <p>Please fill this form to edit your profile.</p>
+
+		</div>
+		<div class="card-body">		
+
             <form action="" method="POST" enctype="multipart/form-data">
             <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
-                        <h5>Edit Your Picture!</h5><br>
+                        <h6>Change your profile picture</h6>
                         <input type="file" name="image" />
                         <br><span class="help-block"><?php echo $imgExt_err; ?></span>
                         <span class="help-block"><?php echo $imgSize_err; ?></span>
             </div>
 
             <div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
-                        <br><h5>Edit Your Bio!</h5><br>
+                        <h6>Edit your bio</h6>
                         <textarea rows="4" cols="50" name="bio"></textarea><br>
                         <span class="help-block"><?php echo $bio_err; ?></span>
             </div>
-                    
-                    <div class="mb-2">
-                        <a href="passwordReset.php">Reset Your Password</a>
-            </div>
-            
-                    <input type="submit" class="btn btn-success" value="Save">
+            <div class="form-group">
+
+                    <input type="submit" class="btn btn-primary" value="Save">
             <a href="profileViewer.php" class="btn btn-warning">Cancel</a>
+                </div>
+            <div class="mb-2">
+                <p>Want to change to password? <a href="passwordReset.php" class="btn btn-primary">Reset Password</a></p>
+            </div>
             </form>  
                 </div> 
         <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
@@ -269,6 +287,9 @@ mysqli_close($link);
         });
             </script> 
         </div>
+             </div>
+        </div>
+        
     <!-- include jquery, popper.js, and bootstrap js -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
