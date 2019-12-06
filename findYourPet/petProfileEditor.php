@@ -137,10 +137,30 @@ if($stmt = mysqli_prepare($link, $sql)){
 
 // Edit mode
 if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // Check to see if pet gender is empty
+    if(isset($_POST['gender'])){
+       // Check to see if the gender is empty
+        if (!strlen(trim($_POST['gender']))){
+            $gender_err = "Please the pets gender.";
+        } else {
+            $gender = $_POST['gender'];
+        }
+    }
     
-    // Check to see if pet name is empty 
+    // Check to see if pet breed is empty
+    if(isset($_POST['breed'])){
+       // Check to see if the breed is empty
+        if (!strlen(trim($_POST['breed']))){
+            $breed_err = "Please select a breed.";
+        } else {
+            $breed = $_POST['breed'];
+        }
+    }
+    
+    // Check to see if pet breed is empty
     if(isset($_POST['petName'])){
-       // Check to see if the name is empty
+       // Check to see if the breed is empty
         if (!strlen(trim($_POST['petName']))){
             $petName_err = "Please type a name.";
         } else {
@@ -148,22 +168,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     
-    // Get the pets gender
-    $gender = $_POST['gender'];
+    // Check to see if pet age is empty
+    if(isset($_POST['age'])){
+       // Check to see if the age is empty
+        if (!strlen(trim($_POST['age']))){
+            $petAge_err = "Please select an age.";
+        } else {
+            $petAge = $_POST['age'];
+        }
+    }
     
-    // Get the pets age
-    $petAge = $_POST['age'];
-    
-    // Get the pets breed
-    $breed = $_POST['breed'];
-    
-    // Get the neutured value
-    $neutered = $_POST['neutered'];
+    // Check to see if pet neutered is empty
+    if(isset($_POST['neutered'])){
+       // Check to see if the neutered is empty
+        if (!strlen(trim($_POST['neutered']))){
+            $neutered_err = "Please select if the pet is neutered.";
+        } else {
+            $neutered = $_POST['neutered'];
+        }
+    }
     
     // Get Vaccination Records
     $vaccinationRecords = $_POST['vac-list'];
     
-    // Get UPID
+    // Create UPID
     $petID = base64_decode($_GET['id']);
     
     // Upload image system 
@@ -206,7 +234,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Check input errors before inserting in database
-    if(isset($_FILES['image']) && isset($_POST['bio'])) {
         if (empty($bio_err) && empty($imgSize_err) && empty($imgExt_err) && empty($petName) && $reCaptchaVal == "human") {
             
             // Prepare the sql statement
@@ -242,7 +269,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Close connection
         mysqli_close($link);
-    }
     
 }
 
@@ -426,7 +452,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     
                     <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
                         <h5>Upload a Pet Picture:</h5><br>
-                        <input type="file" name="image" />
+                        <input type="file" name="image" accept=".png,.jpg,.jpeg"/>
                         <br><span class="help-block"><?php echo $imgExt_err; ?></span>
                         <span class="help-block"><?php echo $imgSize_err; ?></span>
                     </div>
@@ -564,7 +590,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     
                     <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
                         <h5>Upload a Pet Picture:</h5><br>
-                        <input type="file" name="image" />
+                        <input type="file" name="image" accept=".png,.jpg,.jpeg"/>
                         <br><span class="help-block"><?php echo $imgExt_err; ?></span>
                         <span class="help-block"><?php echo $imgSize_err; ?></span>
                     </div>
