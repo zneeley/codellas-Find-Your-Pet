@@ -232,9 +232,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $accountBio = $_POST['bio'];
         }
     }
-    
-    // Check input errors before inserting in database
-        if (empty($bio_err) && empty($imgSize_err) && empty($imgExt_err) && empty($petName) && $reCaptchaVal == "human") {
+        // Check input errors before inserting in database
+        if (empty($bio_err) && empty($imgSize_err) && empty($imgExt_err) && empty($petName_err) && $reCaptchaVal == "human") {
             
             // Prepare the sql statement
             $sql = "UPDATE pets SET petName = ?, breed = ?, gender = ?, age = ?, neutered = ?, vaccinationRecords = ?, petImage = ?, bio = ? WHERE petID = ?";
