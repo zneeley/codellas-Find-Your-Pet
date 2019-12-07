@@ -152,7 +152,7 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
         <form action="" method="POST" enctype="multipart/form-data">
             <div class="form-group m-5 <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
                 <h4>Choose a Profile Pic!</h4><br>
-                <input type="file" name="image" />
+                <input type="file" name="image" accept=".png,.jpg,.jpeg"/>
                 <br><span class="help-block"><?php echo $imgExt_err; ?></span>
                 <span class="help-block"><?php echo $imgSize_err; ?></span>
             </div>

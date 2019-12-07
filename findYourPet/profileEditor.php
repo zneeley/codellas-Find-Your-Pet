@@ -255,7 +255,7 @@ mysqli_close($link);
             <form action="" method="POST" enctype="multipart/form-data">
             <div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
                         <h6>Change your profile picture</h6>
-                        <input type="file" name="image" />
+                        <input type="file" name="image" accept=".png,.jpg,.jpeg"/>
                         <br><span class="help-block"><?php echo $imgExt_err; ?></span>
                         <span class="help-block"><?php echo $imgSize_err; ?></span>
             </div>
