@@ -177,7 +177,7 @@ mysqli_close($link);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Your Profile</title>
+    <title>Profile Editor</title>
      
    
 <!-- include bootstrap --> 

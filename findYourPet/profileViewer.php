@@ -125,6 +125,36 @@ mysqli_close($link);
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="layout.php">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
+    
+  <style type="text/css">
+         body{
+            background-image: url(images/profile.jpg);            
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font: 14px sans-serif;
+        }
+        h3{ font: sans-serif; }
+        .container{
+            height: 100%;
+            align-content: center;
+            margin-left: 5px;
+           
+        }
+    .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.bio {
+  color: grey;
+  font-size: 16px;
+}
+
+</style>
 </head>
     <body>
         
@@ -162,21 +192,27 @@ mysqli_close($link);
 
 	  </div>
 	</nav>
-        
-        <div id="normal">
-			<div class="card w-auto">
-			  <div class="card-header">
-				  <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile.</label><br>
-			  </div>
-			  <div class="card-body">
-				  <img class="profile_pic" src="<?php echo $profileImgDir; ?>" alt="Your image">
-				  <p class="profile_text"><?php echo $profileBio; ?></p>
-			  </div>
-			  <div class="card-footer">
-	            <a href="welcome.php" class="btn btn-primary">Home</a>
-                    <a href="profileEditor.php" class="btn btn-warning">Edit</a><br>
-                </div>
+  <div class="container">
+	       <div class="d-flex h-100">
+            <div class="card m-5" style="height: 30rem; width: 25rem">      
+ 	<div class="card-header">
+                <h2>Profile Card</h2>
+    </div>
+    <img src="<?php echo $profileImgDir; ?>" alt="Your image" style="width:100%">
+    <label><h3><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?></h3></label>
+    <p class="bio"><?php echo $profileBio; ?></p>
+    <div class="form-group">
+
+                    <a href="welcome.php" class="btn btn-primary">Home</a>
+                    <a href="profileEditor.php" class="btn btn-warning">Edit</a><br> 
+    </div>
+	            
             </div>
+      </div>
+        </div>
+        
+
+        
     <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
     <script>
         grecaptcha.ready(function () {
