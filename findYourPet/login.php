@@ -60,7 +60,63 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     // Check to see if the username is in the user table else see if its in the shelter table
     // Prepare a select statement
-    $sql = "SELECT id FROM users WHERE username = ?";
+    
+    if(strpos(trim($_POST["username"]), "@") == true){
+        
+        //echo "HERE";
+        
+        //stores data posted into username form into encodeEmail variable
+        $encodedEmail = base64_encode(trim($_POST["username"]));
+        //clears username
+        $username = "";
+        
+        //prepares SQL statement for querying user table
+        $sql = "SELECT username 
+                FROM users 
+                WHERE email = ?";
+        //if statement enters if prepare is sucessful
+        if($stmt = mysqli_prepare($link, $sql)){
+            //bind the '?' parameter of the statement to variable $encodedEmail
+            mysqli_stmt_bind_param($stmt, "s", $encodedEmail);
+            //if the SQL statement executes
+            if(mysqli_stmt_execute($stmt)){
+                //bind the username column result to variable $username
+                mysqli_stmt_bind_result($stmt, $username);
+                //bind fetch stmt results, this puts the results into username
+                mysqli_stmt_fetch($stmt);
+                //close SQL statement for the next query
+                mysqli_stmt_close($stmt);
+            }
+        }
+        //echo $username;
+        
+        //prepares SQL statement for querying user table
+        $sql = "SELECT username 
+                FROM shelters 
+                WHERE email = ?";
+        
+        //if username doesn't contain a result
+        if($username == ""){
+            //if statement enters if prepare is sucessful
+            if($stmt = mysqli_prepare($link, $sql)){
+                //bind the '?' parameter of the statement to variable $encodedEmail
+                mysqli_stmt_bind_param($stmt, "s", $encodedEmail);
+                //if the SQL statement executes
+                if(mysqli_stmt_execute($stmt)){
+                    //bind the username column result to variable $username
+                    mysqli_stmt_bind_result($stmt, $username);
+                    //bind fetch stmt results, this puts the results into username
+                    mysqli_stmt_fetch($stmt);
+                    //close SQL statement for the next query
+                    mysqli_stmt_close($stmt);
+                }
+            }
+        }
+    }
+        
+        $sql = "SELECT id 
+            FROM users 
+            WHERE username = ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -75,7 +131,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     // If username is in the user table 
                     if(empty($username_err) && empty($password_err) && $reCaptchaVal == "human"){
                         // Prepare a select statement
-                        $sql = "SELECT id, username, password, userID, FirstName FROM users WHERE username = ?";
+                        $sql = "SELECT id, username, password, userID, FirstName 
+                                FROM users 
+                                WHERE username = ?";
 
                         if($stmt = mysqli_prepare($link, $sql)){
                             // Bind variables to the prepared statement as parameters
@@ -88,7 +146,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             if(mysqli_stmt_execute($stmt)){
                                 // Store result
                                 mysqli_stmt_store_result($stmt);
-
                                 // Check if username exists, if yes then verify password
                                 if(mysqli_stmt_num_rows($stmt) == 1){                    
                                     // Bind result variables
