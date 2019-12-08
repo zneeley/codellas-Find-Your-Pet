@@ -15,28 +15,26 @@
 <body>
 
     <body class="text-center">
-
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column hero-image">
-  <header class="masthead mb-auto">
-    <div class="inner">
-        <div class="logo-image"><img src="images/image.png" alt="logo" width=auto height="250"></div>
+ 
+	<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column hero-image">
+    <div class="content-container"> 
+        <div id="logo-img"><img class="logo" src="images/fyplogo.png" height ="175" width =auto></div>
 <!--
       <nav class="nav nav-masthead justify-content-center">
         <a class="nav-link active" href="#">Home</a>
         <a class="nav-link" href="#">Contact</a> 
       </nav> -->
-    </div>
-  </header>
 
   <main role="main" class="inner cover">
-    <h1 class="cover-heading">Find your Pet</h1>
+
     <p class="lead">We make adopting pets and finding your forever best friend easier!</p>
     <p class="lead">
       <button id="register_btn" class="btn btn-lg btn-secondary">Register</button>
       <a href="login.php" class="btn btn-lg btn-secondary">Login</a>
     </p>
   </main>
-
+</div>
+  
   <footer class="mastfoot mt-auto">
     <div class="inner">
       <p>@2019 Find your Pet</p>

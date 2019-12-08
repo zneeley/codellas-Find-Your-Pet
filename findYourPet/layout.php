@@ -14,10 +14,16 @@ Custom CSS Stylesheet
 
 
 
-.logo-image {
-    width: 90vw;
+.content-container{
+	position: absolute;
+    top: 35%;
+    max-width: 100%
+	}
+
+.logo{
+    width: 60%;
+    max-width: 100%;
     height: auto;
-    position: center;
 }
 .hero-image {  
 
@@ -32,7 +38,7 @@ Custom CSS Stylesheet
     
     /* Text styles */
     text-align: center;
-    color: white;
+    color: black;
     
     /* Background styles */
     background-image: linear-gradient(rgba(255,255,255,255), rgba(0,0,0, 0)), url(images/<?php echo $selectedBg; ?>);
