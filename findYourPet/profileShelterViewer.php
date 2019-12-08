@@ -130,7 +130,7 @@ mysqli_close($link);
 </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <img class="navbar_pic" src="images/pawprint.jpg" alt="Your image">
+          <img class="navbar_pic" src="images/navbarlogo.png" alt="Your image">
           <a class="navbar-brand" href="#">F.Y.P</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-toggle" aria-controls="navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
