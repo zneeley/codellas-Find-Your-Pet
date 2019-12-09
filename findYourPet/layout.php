@@ -251,6 +251,15 @@ margin-left: 4px;
  */
  .profile_pic{
    border-radius: 100%;
+   width: 50px;
+   height: 50px;
+   shape-outside: circle();
+   float:left;
+   margin-right: 10px;
+   margin-bottom: 10px;
+ }
+ .profile_pic_large{
+   border-radius: 100%;
    width: 100px;
    height: 100px;
    shape-outside: circle();
@@ -266,8 +275,8 @@ margin-left: 4px;
  * Navbar
  */
  .navbar_pic{
-   width: 75px;
-   height: 75;
+   width: 50px;
+   height: 50px;
    margin-right: 10px;
    margin-bottom: 10px;
  }

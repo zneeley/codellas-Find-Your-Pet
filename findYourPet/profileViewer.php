@@ -143,7 +143,6 @@ mysqli_close($link);
         }
     .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 300px;
   margin: auto;
   text-align: center;
   font-family: sans-serif;
@@ -193,23 +192,23 @@ mysqli_close($link);
 	  </div>
 	</nav>
   <div class="container">
-	       <div class="d-flex h-100">
-            <div class="card m-5" style="height: 30rem; width: 25rem">      
- 	<div class="card-header">
-                <h2>Profile Card</h2>
-    </div>
-    <img src="<?php echo $profileImgDir; ?>" alt="Your image" style="width:100%">
-    <label><h3><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?></h3></label>
-    <p class="bio"><?php echo $profileBio; ?></p>
-    <div class="form-group">
-
-                    <a href="welcome.php" class="btn btn-primary">Home</a>
-                    <a href="profileEditor.php" class="btn btn-warning">Edit</a><br> 
-    </div>
-	            
+     <div class="d-flex h-100">
+        <div class="card m-5" style="">      
+          <div class="card-header">
+            <h2>Profile Card</h2>
+          </div>
+          <img class="card-body" src="<?php echo $profileImgDir; ?>" alt="Your image" style="width:100%; height: 300px">
+          <div class="card-footer">
+            <label><h3><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?></h3></label>
+            <p class="bio"><?php echo $profileBio; ?></p>
+            <div class="form-group">
+              <a href="welcome.php" class="btn btn-primary">Home</a>
+              <a href="profileEditor.php" class="btn btn-warning">Edit</a><br> 
             </div>
-      </div>
+          </div>
         </div>
+    </div>
+  </div>
         
 
         

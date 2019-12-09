@@ -179,7 +179,7 @@ if ($shelterID === $_SESSION['accountID']) {
                     <label><?php echo htmlspecialchars($petName); ?>'s Profile.</label><br>
 		</div>
 		<div class="card-body">
-		    <img class="profile_pic" src="<?php echo $petImage; ?>" alt="Pet image">
+		    <img class="profile_pic_large" src="<?php echo $petImage; ?>" alt="Pet image">
                     <p class="profile_text"><?php echo $accountBio; ?></p><br><br><br>
                     <label>Type: </label>
                     <p class="profile_text"><?php echo $petType; ?></p><br>

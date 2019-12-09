@@ -189,7 +189,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $accountBio = $_POST['bio'];
         }
     }
-     
     // Check input errors before inserting in database
     if(empty($bio_err) && empty($breed_err) && empty($gender_err) && empty($petAge_err) && empty($petType_err) && empty($imgSize_err) && empty($imgExt_err) && empty($neutered_err) 
             && empty($petName_err) && $reCaptchaVal == "human"){
@@ -432,7 +431,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <input type="submit" class="btn btn-primary" value="Submit">
                     <input type="reset" class="btn btn-default" value="Reset">
-                    <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/>
+                    <input type="hidden" value="" class="recaptchaResponse" name="recaptcha_response"/>
                 </form>
             </div>
             
@@ -455,24 +454,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <div class="form-group <?php echo (!empty($petAge_err)) ? 'has-error' : ''; ?>">
                         <h5>How old is the pet? (In human years)</h5>
-                        <input type="radio" name="age" id="0-2-dog" value="0-2 years" checked>
-                        <label for="0-2-dog">0-2 years</label><br>
-                        <input type="radio" name="age" id="2-4-dog" value="2-4 years">
-                        <label for="2-4-dog">2-4 years</label><br>
-                        <input type="radio" name="age" id="4-6-dog" value="4-6 years">
-                        <label for="4-6-dog">4-6 years</label><br>
-                        <input type="radio" name="age" id="6-8-dog" value="6-8 years">
-                        <label for="6-8-dog">6-8 years</label><br>
-                        <input type="radio" name="age" id="8-10-dog" value="8-10 years">
-                        <label for="8-10-dog">8-10 years</label><br>
-                        <input type="radio" name="age" id="10-12-dog" value="10-12 years">
-                        <label for="10-12-dog">10-12 years</label><br>
-                        <input type="radio" name="age" id="12-14-dog" value="12-14 years">
-                        <label for="12-14-dog">12-14 years</label><br>
-                        <input type="radio" name="age" id="14-16-dog" value="14-16 years">
-                        <label for="14-16-dog">14-16 years</label><br>
-                        <input type="radio" name="age" id="16-dog" value="16 years or older">
-                        <label for="16-dog">16+ years</label><br>
+                        <input type="radio" name="age" id="0-2-cat" value="0-2 years" checked>
+                        <label for="0-2-cat">0-2 years</label><br>
+                        <input type="radio" name="age" id="2-4-cat" value="2-4 years">
+                        <label for="2-4-cat">2-4 years</label><br>
+                        <input type="radio" name="age" id="4-6-cat" value="4-6 years">
+                        <label for="4-6-cat">4-6 years</label><br>
+                        <input type="radio" name="age" id="6-8-cat" value="6-8 years">
+                        <label for="6-8-cat">6-8 years</label><br>
+                        <input type="radio" name="age" id="8-10-cat" value="8-10 years">
+                        <label for="8-10-cat">8-10 years</label><br>
+                        <input type="radio" name="age" id="10-12-cat" value="10-12 years">
+                        <label for="10-12-cat">10-12 years</label><br>
+                        <input type="radio" name="age" id="12-14-cat" value="12-14 years">
+                        <label for="12-14-cat">12-14 years</label><br>
+                        <input type="radio" name="age" id="14-16-cat" value="14-16 years">
+                        <label for="14-16-cat">14-16 years</label><br>
+                        <input type="radio" name="age" id="16-cat" value="16 years or older">
+                        <label for="16-cat">16+ years</label><br>
                         <span class="help-block"><?php echo $gender_err; ?></span>
                     </div>
                     <div class="form-group <?php echo (!empty($breed_err)) ? 'has-error' : ''; ?>">
@@ -570,16 +569,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <input type="submit" class="btn btn-primary" value="Submit">
                     <input type="reset" class="btn btn-default" value="Reset">
-                    <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/>
+                    <input type="hidden" value="" class="recaptchaResponse" name="recaptcha_response"/>
                 </form>
             </div>
     <script>
         grecaptcha.ready(function () {
             grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
                 .then(function (token) {
-                var recaptchaResponse = document.getElementById('recaptchaResponse');
-                console.log(recaptchaResponse);
-                recaptchaResponse.value = token;
+                $(".recaptchaResponse").each( function(){
+                  $(this).val(token);
+                  console.log($(this).val());
+                });
             });
         });
     </script> 

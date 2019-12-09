@@ -169,7 +169,7 @@ mysqli_close($link);
                     <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile.</label><br>
 		</div>
 		<div class="card-body">
-		    <img class="profile_pic" src="<?php echo $profileImgDir; ?>" alt="Your image">
+		    <img class="profile_pic_large" src="<?php echo $profileImgDir; ?>" alt="Your image">
                     <p class="profile_text"><?php echo $profileBio; ?></p><br>
                     <label>Shelter Address: </label>
                     <p class="profile_text"><?php echo $profileAddress; ?></p><br>

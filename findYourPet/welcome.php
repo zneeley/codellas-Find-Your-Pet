@@ -52,7 +52,6 @@ if($stmt = mysqli_prepare($link, $sql)){
 
 $sql="SELECT * FROM pets";
 $pets =  mysqli_query($link,$sql);
-var_dump($pets->fetch_all());
 mysqli_close($link);    
 }
 
@@ -116,17 +115,19 @@ mysqli_close($link);
     
     <div>
         <b><label>Pets:</label></b><br>
-        <div class ="row justify-content-center">
+      <div class ="row justify-content-center">
         <?php foreach($pets as $pet){?>
-        <div class="card col-sm-3" style="width: 18rem;">
-        <img src="<?php echo base64_decode($pet["petImage"]); ?>" class="card-img-top" alt="Pet image">
-        <div class="card-body">
-          <h5 class="card-title"><?php echo($pet["petName"]) ?></h5>
-          <p class="card-text"><?php echo($pet["breed"]) ?></p>
-          <p class="card-text"><?php echo($pet["gender"]) ?></p>
-          <a href="/petProfile.php?id=<?php echo base64_encode($pet["petID"]) ?>" class="btn btn-primary">View Profile</a>
+        <div class="card m-4 col-xl-2" style="width: 18rem;">
+          <div class="card-body">
+            <img src="<?php echo base64_decode($pet["petImage"]); ?>" class="card-img-top" alt="Pet image">
+          </div>
+          <div class="card-footer">
+            <h5 class="card-title"><?php echo($pet["petName"]) ?></h5>
+            <p class="card-text"><?php echo($pet["breed"]) ?></p>
+            <p class="card-text"><?php echo($pet["gender"]) ?></p>
+            <a href="/petProfile.php?id=<?php echo base64_encode($pet["petID"]) ?>" class="btn btn-primary">View Profile</a>
+          </div>
         </div>
-      </div>
         <?php } ?>
         
     </div>
