@@ -26,7 +26,7 @@ if ($_SESSION['accountType'] === "user") {
     $sql = "SELECT profileImage FROM users WHERE userID = ?";
     
 } else {
-    $profileType = 'profileShelterViewer.php';
+    $profileType = 'profileShelterViewer.php?id='.base64_encode($_SESSION['accountID']);
     $editType = 'profileShelterEditor.php';
     
     // Prepare a select statement

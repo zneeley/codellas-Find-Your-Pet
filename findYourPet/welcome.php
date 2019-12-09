@@ -23,7 +23,7 @@ if ($_SESSION['accountType'] === "user") {
     $sql = "SELECT profileImage FROM users WHERE userID = ?";
     
 } else {
-    $profileType = 'profileShelterViewer.php';
+    $profileType = 'profileShelterViewer.php?id='.base64_encode($_SESSION['accountID']);
     $editType = 'profileShelterEditor.php';
     
     // Prepare a select statement
@@ -130,7 +130,7 @@ mysqli_close($link);
         </div>
         <?php } ?>
         
-    </div>
+        </div>
 	   <!-- include jquery, popper.js, and bootstrap js -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

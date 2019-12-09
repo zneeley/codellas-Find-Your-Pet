@@ -5,7 +5,7 @@ require_once "config.php";
 
 // init variables
 $fileDir = $accountBio = $petID = $shelterID = $petType = $gender = $neutered = $vaccinationRecords = $petName = $petAge = $breed = "";
-$profileType =  $editType = $profileImgDir = "";
+$profileType =  $editType = $profileImgDir = $viewShelter = "";
 
 // Start Session
 session_start();
@@ -25,7 +25,7 @@ if ($_SESSION['accountType'] === "user") {
     $sql = "SELECT profileImage FROM users WHERE userID = ?";
     
 } else {
-    $profileType = 'profileShelterViewer.php';
+    $profileType = 'profileShelterViewer.php?id='.base64_encode($_SESSION['accountID']);
     $editType = 'profileShelterEditor.php';
     
     // Prepare a select statement
@@ -112,6 +112,8 @@ if($stmt = mysqli_prepare($link, $sql)){
 mysqli_close($link);    
 }
 
+$viewShelter = "<a href=\"profileShelterViewer.php?id=". base64_encode($shelterID)."\" class=\"btn btn-success\">View Shelter</a>";
+
 if ($shelterID === $_SESSION['accountID']) {
     $editButton = "<a href=\"petProfileEditor.php?id=".$_GET['id']."\" class=\"btn btn-warning\">Edit</a><br>";
 } else {
@@ -191,12 +193,13 @@ if ($shelterID === $_SESSION['accountID']) {
                     <p class="profile_text"><?php echo $petAge; ?></p><br>
                     <label>Neutered: </label>
                     <p class="profile_text"><?php echo $neutered; ?></p><br>
-                    <label>Vaccination Records: ADD PROPER INFORMATION WHEN INFO IS ADDED</label>
+                    <label>Vaccination Records:</label>
                     <p class="profile_text"><?php echo $vaccinationRecords; ?></p><br>
                     
                 </div>
 		<div class="card-footer">
                     <a href="welcome.php" class="btn btn-primary">Home</a>
+                    <?php echo $viewShelter; ?>
 		    <?php echo $editButton; ?><br>
 		</div>
             </div>

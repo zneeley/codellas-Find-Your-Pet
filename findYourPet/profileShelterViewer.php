@@ -5,7 +5,7 @@ require_once "config.php";
 
 // init variables
 $fileDir = $fileNameNew = $accountBio = $profileImgDir = $profileBio = $profileAddress = $profilePhone = "";
-$profileType =  $editType = $profileImgDir = "";
+$profileType =  $editType = $profileImgDir = $pets = $shelterName = "";
 
 // Start Session
 session_start();
@@ -25,7 +25,7 @@ if ($_SESSION['accountType'] === "user") {
     $sql = "SELECT profileImage FROM users WHERE userID = ?";
     
 } else {
-    $profileType = 'profileShelterViewer.php';
+    $profileType = 'profileShelterViewer.php?id='.base64_encode($_SESSION['accountID']);
     $editType = 'profileShelterEditor.php';
     
     // Prepare a select statement
@@ -79,32 +79,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Prepare a select statement
-$sql = "SELECT profileImage, shelterBio, address, phoneNum FROM shelters WHERE shelterID = ?";
+$sql = "SELECT profileImage, shelterBio, address, phoneNum, shelterName FROM shelters WHERE shelterID = ?";
 
 if($stmt = mysqli_prepare($link, $sql)){
     // Bind variables to the prepared statement as parameters
     mysqli_stmt_bind_param($stmt, "s", $param_shelterID);
 
     // Set parameters
-    $param_shelterID = $_SESSION['accountID'];
+    $param_shelterID = base64_decode($_GET['id']);
     
     // Attempt to execute the prepared statement
     if(mysqli_stmt_execute($stmt)){
         // Store result
         mysqli_stmt_store_result($stmt);
         
-        mysqli_stmt_bind_result($stmt, $param_shelterImage, $param_shelterBio, $param_address, $param_phoneNum);
+        mysqli_stmt_bind_result($stmt, $param_shelterImage, $param_shelterBio, $param_address, $param_phoneNum, $param_shelterName);
         if(mysqli_stmt_fetch($stmt)){
             $profileBio = $param_shelterBio;
             $profileImgDir = base64_decode($param_shelterImage);
             $profileAddress = $param_address;
             $profilePhone = $param_phoneNum;
+            $shelterName = $param_shelterName;
             
         }
     }
     // Close statement
     mysqli_stmt_close($stmt);
-    
+ 
+// Get the pets from the database for use with cards
+$sql="SELECT * FROM pets";
+$pets =  mysqli_query($link,$sql);
+
 // Close connection
 mysqli_close($link);    
 }
@@ -166,7 +171,7 @@ mysqli_close($link);
         <div id="normal">
             <div class="card w-auto">
                 <div class="card-header">
-                    <label><?php echo htmlspecialchars($_SESSION["accountHolderName"]); ?>'s Profile.</label><br>
+                    <label><?php echo htmlspecialchars($shelterName); ?>'s Profile.</label><br>
 		</div>
 		<div class="card-body">
 		    <img class="profile_pic_large" src="<?php echo $profileImgDir; ?>" alt="Your image">
@@ -178,24 +183,34 @@ mysqli_close($link);
                     
                     <br>
                     <b><label>Pets:</label></b><br>
-                    <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5"><img width="150" height="150" src="uploadContent/petImages/UPID-5dccb42d6ae29.jpg" alt="Pet image"></a><br>
-                    <a href="/petProfile.php?id=VVBJRC01ZGNjYjQyZDZhZTI5">Gizmo's Profile</a>
+                    <div class ="row justify-content-center">
+                    <?php foreach($pets as $pet){ if ($pet["shelterID"] == base64_decode($_GET['id'])) {?>
+                    <div class="card m-4 col-xl-2" style="width: 18rem;">
+                      <div class="card-body">
+                        <img src="<?php echo base64_decode($pet["petImage"]); ?>" class="card-img-top" alt="Pet image">
+                      </div>
+                      <div class="card-footer">
+                        <h5 class="card-title"><?php echo($pet["petName"]) ?></h5>
+                        <p class="card-text"><?php echo($pet["breed"]) ?></p>
+                        <p class="card-text"><?php echo($pet["gender"]) ?></p>
+                        <a href="/petProfile.php?id=<?php echo base64_encode($pet["petID"]) ?>" class="btn btn-primary">View Profile</a>
+                      </div>
+                    </div>
+                    <?php } } ?>
+
+                    </div>
                 </div>
 		<div class="card-footer">
 		    <a href="welcome.php" class="btn btn-primary">Home</a>
+                    <?php if (base64_decode($_GET['id']) == $_SESSION['accountID']) { ?>
                     <a href="profileShelterEditor.php" class="btn btn-warning">Edit</a>
                     <a href="createProfilePet.php" class="btn btn-success">Add a Pet</a><br>
+                    <?php } ?>
 		</div>
             </div>
         </div>
     <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
     <script>
-        // Edit mode
-        $("#toggle-button").on("click", function(){
-            $("#editer").show();
-            $("#normal").hide();
-            $("#enableEdit").val('Y');
-        });
         
         grecaptcha.ready(function () {
             grecaptcha.execute('6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7', { action: 'profile' })
