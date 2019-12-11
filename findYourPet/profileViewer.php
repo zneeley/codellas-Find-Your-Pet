@@ -126,7 +126,7 @@ mysqli_close($link);
     <link rel="stylesheet" href="layout.php">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
     
-  <style type="text/css">
+    <style type="text/css">
          body{
             background-image: url(images/profile.jpg);            
             background-size: cover;
@@ -141,19 +141,19 @@ mysqli_close($link);
             margin-left: 5px;
            
         }
-    .card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  margin: auto;
-  text-align: center;
-  font-family: sans-serif;
-}
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: sans-serif;
+        }
 
-.bio {
-  color: grey;
-  font-size: 16px;
-}
+        .bio {
+            color: grey;
+            font-size: 16px;
+        }
 
-</style>
+    </style>
 </head>
     <body>
         

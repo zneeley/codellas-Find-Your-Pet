@@ -138,6 +138,35 @@ if ($shelterID === $_SESSION['accountID']) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="layout.php">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
+    
+     <style type="text/css">
+         body{
+            background-image: url(images/petProfile.jpg);            
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font: 14px sans-serif;
+        }
+        h3{ font: sans-serif; }
+        .container{
+            height: auto;
+            align-content: center;
+            margin-left: 5px;
+           
+        }
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .bio {
+            color: grey;
+            font-size: 16px;
+        }
+
+    </style>
 </head>
     <body>
     
@@ -175,35 +204,33 @@ if ($shelterID === $_SESSION['accountID']) {
           </div>
         </nav>
         
-        <div id="normal">
-            <div class="card w-auto">
-                <div class="card-header">
-                    <label><?php echo htmlspecialchars($petName); ?>'s Profile.</label><br>
-		</div>
-		<div class="card-body">
-		    <img class="profile_pic_large" src="<?php echo $petImage; ?>" alt="Pet image">
-                    <p class="profile_text"><?php echo $accountBio; ?></p><br><br><br>
-                    <label>Type: </label>
-                    <p class="profile_text"><?php echo $petType; ?></p><br>
-                    <label>Breed: </label>
-                    <p class="profile_text"><?php echo $breed; ?></p><br>
-                    <label>Gender: </label>
-                    <p class="profile_text"><?php echo $gender; ?></p><br>
-                    <label>Age: </label>
-                    <p class="profile_text"><?php echo $petAge; ?></p><br>
-                    <label>Neutered: </label>
-                    <p class="profile_text"><?php echo $neutered; ?></p><br>
-                    <label>Vaccination Records:</label>
-                    <p class="profile_text"><?php echo $vaccinationRecords; ?></p><br>
-                    
-                </div>
-		<div class="card-footer">
+        
+        
+    <div class="container">
+     <div class="d-flex h-100">
+        <div class="card m-5" style="width: 30rem;">      
+          <div class="card-header">
+              
+            <h2><?php echo htmlspecialchars($petName); ?>'s Profile.</h2>
+          </div>
+            <div class ="card-body">
+            <img class="card-body" src="<?php echo $petImage; ?>" alt="Pet image" style="width:auto; height: 300px">
+                <div class="card-footer">
+                    <p class="profile_text"><?php echo $accountBio; ?></p>
+                    <p class="profile_text">Type: <?php echo $petType; ?></p>
+                    <p class="profile_text">Breed: <?php echo $breed; ?></p>
+                    <p class="profile_text">Gender: <?php echo $gender; ?></p>
+                    <p class="profile_text">Age: <?php echo $petAge; ?></p>
+                    <p class="profile_text">Neutered: <?php echo $neutered; ?></p>
+                    <p class="profile_text">Vaccination Records: <?php echo $vaccinationRecords; ?></p>
                     <a href="welcome.php" class="btn btn-primary">Home</a>
                     <?php echo $viewShelter; ?>
 		    <?php echo $editButton; ?><br>
 		</div>
             </div>
         </div>
+    </div>
+  </div>
     <input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    
     <script>
         

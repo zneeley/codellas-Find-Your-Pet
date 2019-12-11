@@ -72,7 +72,15 @@ mysqli_close($link);
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="layout.php">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>    <style type="text/css">
-        body{ font: 14px sans-serif; text-align: center; }
+        body{
+            background-image: url(images/welcome.jpg);            
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font: 14px sans-serif;
+            text-align: center;
+        }
+        h3{ font: sans-serif; }
     </style>
 </head>
 <body>
@@ -114,7 +122,6 @@ mysqli_close($link);
     </div>
     
     <div>
-        <b><label>Pets:</label></b><br>
       <div class ="row justify-content-center">
         <?php foreach($pets as $pet){?>
         <div class="card m-4 col-xl-2" style="width: 18rem;">
@@ -131,6 +138,7 @@ mysqli_close($link);
         <?php } ?>
         
         </div>
+    </div>
 	   <!-- include jquery, popper.js, and bootstrap js -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
