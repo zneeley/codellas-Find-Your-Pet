@@ -119,7 +119,11 @@ if ($shelterID === $_SESSION['accountID']) {
 } else {
     $editButton = "";
 }
-
+//format vaccinationRecords
+$vaccinationRecords = str_replace(',','&nbsp<i style="color: green" class="fas fa-check"></i><br>', $vaccinationRecords);
+if($vaccinationRecords == null){
+  $vaccinationRecords = "No Vaccinations";
+}
 ?>
 
 <!DOCTYPE html>
@@ -214,7 +218,7 @@ if ($shelterID === $_SESSION['accountID']) {
             <h2><?php echo htmlspecialchars($petName); ?>'s Profile.</h2>
           </div>
             <div class ="card-body">
-            <img class="card-body" src="<?php echo $petImage; ?>" alt="Pet image" style="width:auto; height: 300px">
+            <img class="card-body" src="<?php echo $petImage; ?>" alt="Pet image" style="width:auto; max-width: 450px; height: 300px">
                 <div class="card-footer">
                     <p class="profile_text"><?php echo $accountBio; ?></p>
                     <p class="profile_text">Type: <?php echo $petType; ?></p>
@@ -222,7 +226,7 @@ if ($shelterID === $_SESSION['accountID']) {
                     <p class="profile_text">Gender: <?php echo $gender; ?></p>
                     <p class="profile_text">Age: <?php echo $petAge; ?></p>
                     <p class="profile_text">Neutered: <?php echo $neutered; ?></p>
-                    <p class="profile_text">Vaccination Records: <?php echo $vaccinationRecords; ?></p>
+                    <p class="profile_text">Vaccination Records:<br> <?php echo $vaccinationRecords; ?></p>
                     <a href="welcome.php" class="btn btn-primary">Home</a>
                     <?php echo $viewShelter; ?>
 		    <?php echo $editButton; ?><br>
