@@ -15,7 +15,7 @@ Custom CSS Stylesheet
 
 
 .content-container{
-	position: absolute;
+    position: absolute;
     top: 35%;
     max-width: 100%
 	}

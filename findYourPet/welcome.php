@@ -76,6 +76,7 @@ mysqli_close($link);
             background-image: url(images/welcome.jpg);            
             background-size: cover;
             background-repeat: no-repeat;
+            background-attachment: fixed;
             height: 100%;
             font: 14px sans-serif;
             text-align: center;
