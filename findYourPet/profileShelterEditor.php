@@ -159,7 +159,7 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
 
             if(mysqli_stmt_execute($stmt)){
                 // Redirect user to profile page
-                header("location: profileShelterViewer.php");
+                header("location: petProfile.php?id=".base64_encode($_SESSION['accountID']));
             }
 
         }

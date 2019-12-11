@@ -526,7 +526,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             <option value="Birman">Birman</option>
                             <option value="Turkish Angora">Turkish Angora</option>
                             <option value="Abyssinian Cat">Abyssinian Cat</option>
-                            <option value="american Shorthair">American Shorthair</option>
+                            <option value="American Shorthair">American Shorthair</option>
                             <option value="Toyger">Toyger</option>
                             <option value="Himalayan Cat">Himalayan Cat</option>
                             <option value="Chartreux">Chartreux</option>
@@ -559,7 +559,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             <option value="Minskin">Minskin</option>
                             <option value="LaPerm">LaPerm</option>
                             <option value="Oriental Longhair">Cornish Rex</option>
-                            <option value="Oriental Longhair">Tabby</option>
                         </select><br>
                     </div>
                     <div class="form-group <?php echo (!empty($neutered_err)) ? 'has-error' : ''; ?>">
