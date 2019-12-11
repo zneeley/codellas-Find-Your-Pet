@@ -197,7 +197,19 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
             background-size: cover;
             background-repeat: no-repeat;
             height: 100%;
+            font: 14px sans-serif;
+
         }
+        
+            
+        h3{ font: sans-serif; }
+        .container{
+            height: 100%;
+            align-content: center;
+            margin-left: 10px;
+           
+        }
+
 	</style>
 
 </head>
@@ -235,9 +247,16 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
               <img class="profile_pic" src="<?php echo $profileImgDir ?>" alt="Your image">
           </div>
         </nav>    
-		<div class="text-center card m-5" style="width: 25rem">
-			<div id="editer">
-				<h1 class="card-header">Shelter Edit</h1><br>
+        <div class="container">
+	       <div class="d-flex h-100">
+            <div class="card m-5" style="height: auto; width: 25rem">
+		<div class="card-header">
+                    <h2>Edit Your Profile</h2>
+                    <p>Please fill this form to edit information about your shelter.</p>
+
+		</div>
+			<div class="card-body">		
+
 				<form action="" method="POST" enctype="multipart/form-data">
 					<div class="form-group <?php echo (!empty($imgExt_err) && !empty($imgSize_err)) ? 'has-error' : ''; ?>">
 						<h5>Edit Profile Picture</h5><br>
@@ -262,13 +281,15 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
                                                 <br><h5>Shelter Phone Number:</h5><br>
 						<input type="tel" name="telphone" placeholder="(888) 888-8888"><br>
 						<span class="help-block"><?php echo $phone_err; ?></span>
-						<div class="m-5">
-                                                <div class="mb-2">
-                                                    <a href="passwordReset.php">Reset Your Password</a>
-                                                </div>
-                                                    <input type="submit" class="btn btn-success" value="Save">
-                                                    <a href="profileShelterViewer.php" class="btn btn-warning">Cancel</a>
-						</div>
+                    </div>
+						 <div class="form-group">
+
+                    <input type="submit" class="btn btn-primary" value="Save">
+            <a href="profileViewer.php" class="btn btn-warning">Cancel</a>
+                </div>
+            <div class="mb-2">
+                <p>Want to change the password? <a href="passwordReset.php" class="btn btn-primary">Reset Password</a></p>
+            </div>
 					</form>    
 			</div> 
 		<input type="hidden" value="" name="recaptcha_response" id="recaptchaResponse"/><br>    

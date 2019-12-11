@@ -271,7 +271,7 @@ mysqli_close($link);
             <a href="profileViewer.php" class="btn btn-warning">Cancel</a>
                 </div>
             <div class="mb-2">
-                <p>Want to change to password? <a href="passwordReset.php" class="btn btn-primary">Reset Password</a></p>
+                <p>Want to change the password? <a href="passwordReset.php" class="btn btn-primary">Reset Password</a></p>
             </div>
             </form>  
                 </div> 

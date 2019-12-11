@@ -132,6 +132,33 @@ mysqli_close($link);
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="layout.php">
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc7Cb0UAAAAAIMgxbAXd9kLcVhLPeapc8zsouu7"></script>
+    <style type="text/css">
+         body{
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font: 14px sans-serif;
+        }
+        h3{ font: sans-serif; }
+        .container{
+            height: 100%;
+            align-content: center;
+            margin-left: 5px;
+           
+        }
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: auto;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .bio {
+            color: grey;
+            font-size: 16px;
+        }
+
+    </style>
 </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -174,15 +201,13 @@ mysqli_close($link);
                     <label><?php echo htmlspecialchars($shelterName); ?>'s Profile.</label><br>
 		</div>
 		<div class="card-body">
-		    <img class="profile_pic_large" src="<?php echo $profileImgDir; ?>" alt="Your image">
+             <img class="card-body" src="<?php echo $profileImgDir; ?>" alt="Your image" style="width:auto; height: 300px">
                     <p class="profile_text"><?php echo $profileBio; ?></p><br>
-                    <label>Shelter Address: </label>
-                    <p class="profile_text"><?php echo $profileAddress; ?></p><br>
-                    <label>Shelter Phone Number: </label>
-                    <p class="profile_text"><?php echo $profilePhone; ?></p><br>
+                    <p class="profile_text">Shelter Address: <?php echo $profileAddress; ?></p><br>
+                    <p class="profile_text">Shelter Phone Number: <?php echo $profilePhone; ?></p><br>
                     
-                    <br>
-                    <b><label>Pets:</label></b><br>
+                   
+           <div class="card-header"><label>Pets</label></div>
                     <div class ="row justify-content-center">
                     <?php foreach($pets as $pet){ if ($pet["shelterID"] == base64_decode($_GET['id'])) {?>
                     <div class="card m-4 col-xl-2" style="width: 18rem;">
