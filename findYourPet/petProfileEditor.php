@@ -255,7 +255,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 // Attempt to execute the prepared statement
                 if(mysqli_stmt_execute($stmt)){
-                    // Redirect user to welcome page
+                    // Redirect user to shelter page
                     header("location: petProfile.php?id=".base64_encode($petID));
                 } else {
                     echo "Something went wrong. Please try again later.";
