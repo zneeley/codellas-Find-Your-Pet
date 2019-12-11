@@ -191,7 +191,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     // Check input errors before inserting in database
     if(empty($bio_err) && empty($breed_err) && empty($gender_err) && empty($petAge_err) && empty($petType_err) && empty($imgSize_err) && empty($imgExt_err) && empty($neutered_err) 
-            && empty($petName_err) && $reCaptchaVal == "human"){
+            && empty($petName_err)/* && $reCaptchaVal == "human"*/){
         
         // Prepare an insert statement
         $sql = "INSERT INTO pets (petID, shelterID, petType, petName, breed, gender, age, neutered, vaccinationRecords, petImage, bio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

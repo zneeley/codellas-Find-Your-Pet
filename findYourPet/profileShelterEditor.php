@@ -204,7 +204,7 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
             
         h3{ font: sans-serif; }
         .container{
-            height: 100%;
+            height: auto;
             align-content: center;
             margin-left: 10px;
            
@@ -267,13 +267,13 @@ if(isset($_FILES['image']) && isset($_POST['bio'])) {
 
 					<div class="form-group <?php echo (!empty($bio_err)) ? 'has-error' : ''; ?>">
 						<br><h5>Your Bio:</h5><br>
-						<textarea rows="4" cols="50" name="bio"></textarea><br>
+						<textarea rows="4" cols="47" name="bio"></textarea><br>
 						<span class="help-block"><?php echo $bio_err; ?></span>
 					</div>
 					
 					<div class="form-group <?php echo (!empty($address_err)) ? 'has-error' : ''; ?>">
 						<br><h5>Shelter Address:</h5><br>
-						<textarea rows="1" cols="50" name="address" placeholder="1234 Some Road, State, Zip"></textarea><br>
+						<textarea rows="1" cols="47" name="address" placeholder="1234 Some Road, State, Zip"></textarea><br>
 						<span class="help-block"><?php echo $address_err; ?></span>
 					</div>
 
