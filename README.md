@@ -14,15 +14,5 @@ The purpose of our project is to develop and provide a service where pet shelter
 
 *****
 
-# General Plan:
-Josh - General landing page and template for site.
-Seth - Database design and maintenance.
-Sikta - General design, documentation.
-Zach - Account creation and login database, account profile sign out, etc
-General - Pick up any where that will need help in.
-
-# Dog Shelters Lists:
-New Mexico: https://www.dogloversdigest.com/new-mexico-rescue-shelters-and-organizations/
-El Paso?/ Texas: https://www.dogloversdigest.com/texas-rescue-shelters-and-organizations/
 
 
